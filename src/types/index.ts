@@ -38,7 +38,7 @@ export interface PersonalInfo {
   phone: string;
   location: string;
   bio?: string;
-  profileImage: string;
+  profileImage?: string;
   resumeUrl: string;
   socialLinks: {
     linkedin: string;
