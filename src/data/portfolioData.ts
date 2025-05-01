@@ -8,7 +8,7 @@ export const personalInfo: PersonalInfo = {
   phone: '+2348054771205', // Replace with your actual phone
   location: 'Lagos, Nigeria',
   profileImage: '/Portfolio/Images/ayoola.PNG', // Updated path for GitHub Pages compatibility
-  resumeUrl: '/src/resume.pdf', // Updated to point to the actual resume file
+  resumeUrl: '/Portfolio/documents/ayoola-aina-resume.pdf', // Updated path for resume download
   socialLinks: {
     linkedin: 'https://www.linkedin.com/in/ayoola-aina-10940976/',
     twitter: 'https://twitter.com/don_aina', // Replace with your actual Twitter
