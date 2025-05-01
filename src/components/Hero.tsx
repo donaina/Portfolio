@@ -87,14 +87,14 @@ const Hero: React.FC = () => {
         </div>
       </div>
       
-      <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2">
+      <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 md:bottom-8 z-10">
         <Link
           to="about"
           spy={true}
           smooth={true}
           offset={-70}
           duration={500}
-          className="flex items-center justify-center w-12 h-12 bg-white/90 dark:bg-primary-700/90 backdrop-blur rounded-full text-primary-500 dark:text-white shadow-lg hover:shadow-xl hover:bg-white dark:hover:bg-primary-700 transition-all duration-300 cursor-pointer"
+          className="flex items-center justify-center w-10 h-10 md:w-12 md:h-12 bg-white/90 dark:bg-primary-700/90 backdrop-blur rounded-full text-primary-500 dark:text-white shadow-lg hover:shadow-xl hover:bg-white dark:hover:bg-primary-700 transition-all duration-300 cursor-pointer"
           aria-label="Scroll to About section"
         >
           <ArrowDown size={24} strokeWidth={2.5} className="animate-bounce" />
