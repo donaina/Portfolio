@@ -2,7 +2,6 @@ import React from 'react';
 import { Link } from 'react-scroll';
 import { ArrowDown, FileDown, Linkedin, Twitter, Github } from 'lucide-react';
 import { personalInfo } from '../data/portfolioData';
-import profileImage from '../assets/ayoola.png';
 
 const Hero: React.FC = () => {
   return (
@@ -80,7 +79,7 @@ const Hero: React.FC = () => {
         <div className="w-full md:w-1/2 flex justify-center animate-fadeIn">
           <div className="relative w-64 h-64 sm:w-80 sm:h-80 lg:w-96 lg:h-96 rounded-full overflow-hidden border-4 border-accent-500 shadow-xl">
             <img 
-              src={profileImage} 
+              src="/Portfolio/Images/ayoola.png"
               alt={personalInfo.name} 
               className="w-full h-full object-cover"
             />

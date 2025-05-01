@@ -8,4 +8,12 @@ export default defineConfig({
     exclude: ['lucide-react'],
   },
   base: '/Portfolio/',
+  build: {
+    assetsDir: 'assets',
+    rollupOptions: {
+      output: {
+        assetFileNames: 'assets/[name].[ext]'
+      }
+    }
+  }
 });
