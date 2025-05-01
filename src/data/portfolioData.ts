@@ -7,7 +7,7 @@ export const personalInfo: PersonalInfo = {
   email: 'ayo@webraiders.co', // Replace with your actual email
   phone: '+2348054771205', // Replace with your actual phone
   location: 'Lagos, Nigeria',
-  profileImage: '/Images/ayoola.png', // Updated path to match dist folder structure
+  profileImage: '/Portfolio/Images/ayoola.png', // Updated to use PNG image
   resumeUrl: '/Portfolio/documents/ayoola-aina-resume.pdf', // Updated path for resume download
   socialLinks: {
     linkedin: 'https://www.linkedin.com/in/ayoola-aina-10940976/',
