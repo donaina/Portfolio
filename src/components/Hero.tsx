@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-scroll';
 import { ArrowDown, FileDown, Linkedin, Twitter, Github } from 'lucide-react';
 import { personalInfo } from '../data/portfolioData';
-import profileImage from '/Images/ayoola.png';
+import profileImage from '../assets/ayoola.png';
 
 const Hero: React.FC = () => {
   return (
