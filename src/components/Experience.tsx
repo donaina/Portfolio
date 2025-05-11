@@ -27,7 +27,7 @@ const Experience: React.FC = () => {
                 className={`flex flex-col ${index % 2 === 0 ? 'md:flex-row' : 'md:flex-row-reverse'} items-center`}
               >
                 {/* Timeline content */}
-                <div className={`w-full md:w-1/2 mb-8 md:mb-0 ${index % 2 === 0 ? 'md:pr-12 md:text-right' : 'md:pl-12'}`}>
+                <div className={`w-full md:w-1/2 mb-8 md:mb-0 ${index % 2 === 0 ? 'md:pr-12' : 'md:pl-12'}`}>
                   <div 
                     className={`bg-white dark:bg-primary-700 p-6 rounded-lg shadow-md hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1 ${
                       index % 2 === 0 ? 'animate-slideInLeft' : 'animate-slideInRight'
@@ -37,14 +37,14 @@ const Experience: React.FC = () => {
                       {exp.title}
                     </h3>
                     <h4 className="flex items-center text-lg font-medium text-accent-500 mb-3">
-                      <Briefcase size={18} className={`${index % 2 === 0 ? 'ml-2' : 'mr-2'} inline`} />
+                      <Briefcase size={18} className="mr-2 inline" />
                       {exp.company}
                     </h4>
-                    <div className={`flex items-center text-sm text-primary-400 dark:text-primary-300 mb-4 ${index % 2 === 0 ? 'justify-end' : 'justify-start'}`}>
-                      <CalendarDays size={14} className={`${index % 2 === 0 ? 'ml-2' : 'mr-2'} inline`} />
+                    <div className="flex items-center text-sm text-primary-400 dark:text-primary-300 mb-4">
+                      <CalendarDays size={14} className="mr-2 inline" />
                       {exp.period}
                     </div>
-                    <ul className={`space-y-2 text-primary-400 dark:text-primary-200 ${index % 2 === 0 ? 'text-right' : 'text-left'}`}>
+                    <ul className="space-y-2 text-primary-400 dark:text-primary-200">
                       {exp.description.map((item, i) => (
                         <li key={i} className="leading-relaxed">{item}</li>
                       ))}
