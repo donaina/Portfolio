@@ -72,6 +72,19 @@ export const experiences: Experience[] = [
   },
   {
     id: 5,
+    title: 'Quality Assurance & Network Tester',
+    company: 'Xiaomi Technologies',
+    period: 'September 2021 - September 2022',
+    description: [
+      'Functional Testing: Performed comprehensive functional and network testing on Xiaomi mobile devices across software release stages.',
+      'Test Management: Created and executed manual test cases using TestRail and tracked bugs via JIRA.',
+      'Defect Management: Identified, prioritized, and documented defects; collaborated with developers for timely resolutions.',
+      'Process Improvement: Maintained detailed test documentation and contributed to process improvement initiatives.'
+    ],
+    technologies: ['TestRail', 'JIRA', 'Quality Assurance', 'Network Testing'],
+  },
+  {
+    id: 6,
     title: 'Technical Support Engineer',
     company: 'Abbey Mortgage Bank PLC',
     period: 'June 2017 - February 2020',
