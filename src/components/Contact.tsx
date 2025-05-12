@@ -1,3 +1,4 @@
+// Test: force a diff for GitHub PR
 import React, { useState } from 'react';
 import { personalInfo } from '../data/portfolioData';
 import { Mail, Phone, MapPin, Send, Linkedin, Twitter, Github } from 'lucide-react';
