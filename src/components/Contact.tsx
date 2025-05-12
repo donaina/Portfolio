@@ -1,8 +1,56 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { personalInfo } from '../data/portfolioData';
 import { Mail, Phone, MapPin, Send, Linkedin, Twitter, Github } from 'lucide-react';
 
 const Contact: React.FC = () => {
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    subject: '',
+    message: ''
+  });
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    
+    try {
+      const response = await fetch(window.location.pathname, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        body: new URLSearchParams({
+          'form-name': 'contact',
+          ...formData
+        }).toString()
+      });
+
+      if (response.ok) {
+        // Clear form data
+        setFormData({
+          name: '',
+          email: '',
+          subject: '',
+          message: ''
+        });
+        alert('Message sent successfully!');
+      } else {
+        throw new Error('Form submission failed');
+      }
+    } catch (error) {
+      console.error('Error submitting form:', error);
+      alert('Failed to send message. Please try again.');
+    }
+  };
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({
+      ...prev,
+      [name]: value
+    }));
+  };
+
   return (
     <section id="contact" className="py-20 bg-primary-50 dark:bg-primary-800">
       <div className="container mx-auto px-4">
@@ -106,9 +154,9 @@ const Contact: React.FC = () => {
             <form 
               name="contact" 
               method="POST" 
-              data-netlify="true"
+              data-netlify="true" 
               netlify-honeypot="bot-field"
-              action="/success"
+              onSubmit={handleSubmit} 
               className="space-y-6"
             >
               <input type="hidden" name="form-name" value="contact" />
@@ -123,6 +171,8 @@ const Contact: React.FC = () => {
                     type="text"
                     id="name"
                     name="name"
+                    value={formData.name}
+                    onChange={handleChange}
                     required
                     className="w-full px-4 py-2 rounded-md border border-primary-200 dark:border-primary-600 bg-white dark:bg-primary-800 text-primary-500 dark:text-white focus:outline-none focus:ring-2 focus:ring-accent-500"
                   />
@@ -135,6 +185,8 @@ const Contact: React.FC = () => {
                     type="email"
                     id="email"
                     name="email"
+                    value={formData.email}
+                    onChange={handleChange}
                     required
                     className="w-full px-4 py-2 rounded-md border border-primary-200 dark:border-primary-600 bg-white dark:bg-primary-800 text-primary-500 dark:text-white focus:outline-none focus:ring-2 focus:ring-accent-500"
                   />
@@ -149,11 +201,13 @@ const Contact: React.FC = () => {
                   type="text"
                   id="subject"
                   name="subject"
+                  value={formData.subject}
+                  onChange={handleChange}
                   required
                   className="w-full px-4 py-2 rounded-md border border-primary-200 dark:border-primary-600 bg-white dark:bg-primary-800 text-primary-500 dark:text-white focus:outline-none focus:ring-2 focus:ring-accent-500"
                 />
               </div>
-              
+
               <div>
                 <label htmlFor="message" className="block text-sm font-medium text-primary-500 dark:text-primary-200 mb-2">
                   Message
@@ -161,12 +215,14 @@ const Contact: React.FC = () => {
                 <textarea
                   id="message"
                   name="message"
+                  value={formData.message}
+                  onChange={handleChange}
                   required
                   rows={5}
                   className="w-full px-4 py-2 rounded-md border border-primary-200 dark:border-primary-600 bg-white dark:bg-primary-800 text-primary-500 dark:text-white focus:outline-none focus:ring-2 focus:ring-accent-500"
                 ></textarea>
               </div>
-              
+
               <button
                 type="submit"
                 className="w-full flex items-center justify-center px-6 py-3 bg-accent-500 text-white rounded-md transition-colors duration-300 hover:bg-accent-600"
