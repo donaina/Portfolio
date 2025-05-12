@@ -1,13 +1,21 @@
 // Test: force a diff for GitHub PR
 import React, { useState } from 'react';
 import { personalInfo } from '../data/portfolioData';
-import { Mail, Phone, MapPin, Send, Linkedin, Twitter, Github } from 'lucide-react';
+import { Mail, Phone, MapPin, Send, Linkedin, Twitter, Github, CheckCircle2, XCircle } from 'lucide-react';
 
 const Contact: React.FC = () => {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
     subject: '',
+    message: ''
+  });
+
+  const [notification, setNotification] = useState<{
+    type: 'success' | 'error' | null;
+    message: string;
+  }>({
+    type: null,
     message: ''
   });
 
@@ -32,13 +40,29 @@ const Contact: React.FC = () => {
           subject: '',
           message: ''
         });
-        alert('Message sent successfully!');
+        // Show success notification
+        setNotification({
+          type: 'success',
+          message: 'Message sent successfully! I\'ll get back to you soon.'
+        });
+        // Hide notification after 5 seconds
+        setTimeout(() => {
+          setNotification({ type: null, message: '' });
+        }, 5000);
       } else {
         throw new Error('Form submission failed');
       }
     } catch (error) {
       console.error('Error submitting form:', error);
-      alert('Failed to send message. Please try again.');
+      // Show error notification
+      setNotification({
+        type: 'error',
+        message: 'Failed to send message. Please try again.'
+      });
+      // Hide notification after 5 seconds
+      setTimeout(() => {
+        setNotification({ type: null, message: '' });
+      }, 5000);
     }
   };
 
@@ -52,6 +76,20 @@ const Contact: React.FC = () => {
 
   return (
     <section id="contact" className="py-20 bg-primary-50 dark:bg-primary-800">
+      {/* Notification Toast */}
+      {notification.type && (
+        <div className={`fixed top-4 right-4 z-50 flex items-center p-4 rounded-lg shadow-lg transform transition-all duration-500 ${
+          notification.type === 'success' ? 'bg-green-500' : 'bg-red-500'
+        } text-white`}>
+          {notification.type === 'success' ? (
+            <CheckCircle2 className="w-6 h-6 mr-2" />
+          ) : (
+            <XCircle className="w-6 h-6 mr-2" />
+          )}
+          <p>{notification.message}</p>
+        </div>
+      )}
+
       <div className="container mx-auto px-4">
         <div className="text-center mb-16">
           <h2 className="text-3xl md:text-4xl font-heading font-bold text-primary-500 dark:text-white">
