@@ -1,10 +1,36 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { personalInfo } from '../data/portfolioData';
 import { Mail, Phone, MapPin, Send, Linkedin, Twitter, Github } from 'lucide-react';
 
 const Contact: React.FC = () => {
   const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
   const [errorMessage, setErrorMessage] = useState('');
+
+  useEffect(() => {
+    // Add a hidden form to the DOM for Netlify to detect
+    const form = document.createElement('form');
+    form.setAttribute('name', 'contact');
+    form.setAttribute('data-netlify', 'true');
+    form.setAttribute('data-netlify-honeypot', 'bot-field');
+    form.setAttribute('hidden', 'true');
+    
+    const formName = document.createElement('input');
+    formName.setAttribute('type', 'hidden');
+    formName.setAttribute('name', 'form-name');
+    formName.setAttribute('value', 'contact');
+    
+    const botField = document.createElement('input');
+    botField.setAttribute('type', 'hidden');
+    botField.setAttribute('name', 'bot-field');
+    
+    form.appendChild(formName);
+    form.appendChild(botField);
+    document.body.appendChild(form);
+    
+    return () => {
+      document.body.removeChild(form);
+    };
+  }, []);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
