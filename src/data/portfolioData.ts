@@ -4,7 +4,7 @@ export const personalInfo: PersonalInfo = {
   name: 'Ayoola Aina',
   title:
     'Core Banking Platform Lead | Digital Transformation | Software Engineer',
-  email: 'ayo@webraiders.co', // Replace with your actual email
+  email: 'ayoolaina@gmail.com', // Replace with your actual email
   phone: '+2348054771205', // Replace with your actual phone
   location: 'Lagos, Nigeria',
   resumeUrl: '/Portfolio/documents/ayoola-aina-resume.pdf', // Updated path for resume download
