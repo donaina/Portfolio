@@ -5,43 +5,57 @@ export default {
   theme: {
     extend: {
       colors: {
+        night: {
+          950: '#05070F', // Page base background
+          900: '#060A14', // Alternate section background (banding)
+          800: '#0A101F', // Card / surface
+          700: '#0F1830', // Elevated surface / header scrolled bg
+          600: '#16203D', // Hover surface
+          500: '#223056', // Border strong
+        },
+        champagne: {
+          200: '#F4E3B5', // Gold text highlight (on dark)
+          300: '#ECCF94', // Gold text, hover links
+          400: '#E4C580', // Primary accent
+          500: '#D4AF6A', // Deep accent / borders / hover
+          600: '#BC944F', // Accent-pressed
+          700: '#93723C', // Muted gold text
+        },
+        ink: {
+          DEFAULT: '#EAF0FA', // Primary text
+          2: '#A6B2C8', // Secondary text
+          3: '#6B7A93', // Muted / labels
+        },
+        line: {
+          DEFAULT: 'rgba(148, 163, 184, 0.10)', // Hairlines, grid
+          strong: 'rgba(148, 163, 184, 0.18)', // Borders, dividers
+        },
         primary: {
           50: '#e6eaf0',
           100: '#ccd4e0',
           200: '#99a9c2',
           300: '#667fa3',
           400: '#335485',
-          500: '#0A2342', // Main primary color
+          500: '#0A2342',
           600: '#091c35',
           700: '#071528',
           800: '#04101b',
           900: '#02080e',
         },
-        accent: {
-          50: '#fff9e6',
-          100: '#fff3cc',
-          200: '#ffe799',
-          300: '#ffdb66',
-          400: '#ffcf33',
-          500: '#FFD700', // Main accent color
-          600: '#ccac00',
-          700: '#998100',
-          800: '#665600',
-          900: '#332b00',
-        },
         success: {
-          500: '#10B981', // Success color
+          500: '#10B981', // Live / status dot
         },
         warning: {
-          500: '#F59E0B', // Warning color
+          500: '#F59E0B',
         },
         error: {
-          500: '#EF4444', // Error color
+          500: '#EF4444',
         },
       },
       fontFamily: {
         sans: ['Inter', 'sans-serif'],
-        heading: ['Poppins', 'sans-serif'],
+        heading: ['"Space Grotesk"', 'sans-serif'],
+        mono: ['"JetBrains Mono"', 'monospace'],
       },
       animation: {
         fadeIn: 'fadeIn 0.5s ease-in-out',

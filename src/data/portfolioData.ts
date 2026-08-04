@@ -1,173 +1,308 @@
-import { Experience, Education, Skill, PersonalInfo, Project } from '../types';
+import profileImage from '../assets/ayo.jpg';
+import {
+  PersonalInfo,
+  Experience,
+  EducationEntry,
+  Certification,
+  SkillCategory,
+  Project,
+} from '../types';
 
 export const personalInfo: PersonalInfo = {
   name: 'Ayoola Aina',
-  title:
-    'Core Banking Platform Lead | Digital Transformation | Software Engineer',
-  email: 'ayo@webraiders.co', // Replace with your actual email
-  phone: '+2348054771205', // Replace with your actual phone
+  title: 'Payments & Core Banking Engineer',
+  tagline:
+    'Building the rails money moves on — NIP middleware, core banking platforms, and the systems that keep them in balance.',
+  email: 'ayoolaina@gmail.com',
+  phone: '+2348054771205',
   location: 'Lagos, Nigeria',
-  resumeUrl: '/Portfolio/documents/ayoola-aina-resume.pdf', // Updated path for resume download
+  availability: 'Open to Senior Engineering / Payments roles',
+  bio: [
+    'Payments and core-banking engineer with 9+ years across retail banking, microfinance and mortgage. I currently lead the engineering team building BellBank MFB’s payment infrastructure — a NestJS/TypeScript middleware layer over Apache Fineract, integrated with the NIBSS Instant Payment (NIP) rail and Banking-as-a-Service partners.',
+    'I have run core banking platforms end-to-end: account structure, loan origination, disbursement, repayment and collections, reconciliation — for a 5,000+ account microfinance bank. And I design tools that make money movement safe to test, including a fault-injecting NIP simulator that reproduces timeouts, duplicates and declined funds on demand.',
+    'The thread through all of it: money must be safe first and fast second. Idempotency, holds, double-entry ledgers, outbox patterns, and reconciliation that never auto-heals to zero.',
+  ],
+  profileImage,
+  resumeUrl: '/documents/ayoola-aina-resume.pdf',
   socialLinks: {
     linkedin: 'https://www.linkedin.com/in/ayoola-aina-10940976/',
-    twitter: 'https://twitter.com/don_aina', // Replace with your actual Twitter
-    github: 'https://github.com/donaina', // Replace with your actual GitHub
+    twitter: 'https://twitter.com/don_aina',
+    github: 'https://github.com/donaina',
   },
+  stats: [
+    { value: '9+', label: 'years in payments & banking' },
+    { value: '87', label: 'automated tests on the NIP simulator' },
+    { value: '5,000+', label: 'accounts on a Fineract core' },
+    { value: '3-source', label: 'drift reconciliation' },
+  ],
 };
 
 export const experiences: Experience[] = [
   {
     id: 1,
-    title: 'Digital Transformation & Core Banking Platform Lead',
-    company: 'KATSU Network Limited (SABI Africa)',
-    period: 'June 2024 - Present',
-    description: [
-      'Core Banking System Management: Oversee the setup, administration, and management of the core banking application (MIFOS), ensuring seamless integration, functionality, and optimal performance to support bank operations.',
-      'Strategic Decision-Making: Act as a key business decider, contributing to the development and implementation of strategic initiatives to drive growth and operational efficiency.',
-      'Digital Transformation Leadership: Spearhead digital transformation initiatives across KATSU Microfinance Bank, enhancing the efficiency and scalability of financial services.',
-      'Fintech Integration: Manage the integration of Fintech services into Sabi Africa & KATSU MFB\'s platform, enabling microfinance solutions and financial services for SMEs.',
-      'Transaction Analysis: Analyze and interpret complex transaction patterns to ensure system integrity, identify trends, and provide actionable insights for decision-making.'
+    role: 'Engineering Lead, Payment Infrastructure',
+    company: 'BellBank MFB (Consulting)',
+    period: 'Jul 2026 – Present',
+    location: 'Lagos, Nigeria',
+    current: true,
+    summary:
+      'Leading the engineering team building BellBank’s payment infrastructure: a NestJS/TypeScript microservices middleware over Apache Fineract, migrated from legacy Java services.',
+    highlights: [
+      'Own the NIBSS Instant Payment (NIP) integration end-to-end, plus Banking-as-a-Service (Bloc) partner integration.',
+      'Designed the BellMonie NIP Simulator — a fault-injecting mock switch, shadow ledger, outbox pattern and 3-source drift reconciliation (87 tests).',
+      'Redis write-through balance caching and BullMQ-based async processing for resilient core-banking writes.',
+      'Docker + Traefik blue-green deployments and GitHub Actions CI on a VPS migration that eliminated downtime risk.',
     ],
-    technologies: ['MIFOS', 'Fintech Integration', 'Transaction Analysis', 'Digital Transformation'],
+    stack: ['NestJS', 'TypeScript', 'Redis', 'BullMQ', 'Apache Fineract', 'Docker', 'Traefik', 'GitHub Actions'],
   },
   {
     id: 2,
-    title: 'Application Support Engineer',
-    company: 'VFD Tech',
-    period: 'November 2023 - May 2024',
-    description: [
-      'Customer Support: Delivered front-line technical support for Banking-as-a-Service solutions, ensuring smooth transaction experiences and resolving customer issues promptly.',
-      'Transaction Analysis: Analyzed inbound and outbound transactions, leveraging technical deduction skills to troubleshoot and optimize system performance.',
-      'Reporting: Compiled and delivered daily reports featuring comprehensive transaction analysis, providing valuable insights for informed decision-making.',
-      'Expense Portal Support: Provided 1st-level support for the expense portal used by VFD Group entities and external clients, ensuring high service standards.'
+    role: 'Core Banking Platform & Operations Lead',
+    company: 'KATSU Network Limited (SABI Africa)',
+    period: 'Jun 2024 – Jul 2026',
+    location: 'Lagos, Nigeria',
+    summary:
+      'Set up and ran a microfinance bank’s core banking platform from inception — Apache Fineract, account structure, loan workflows, reconciliation and regulatory readiness.',
+    highlights: [
+      'Delivered the full platform setup: account opening, account structure, charge rules, reconciliation models and reporting — with CBN regulatory readiness.',
+      'Administered the MIFOS/Apache Fineract core for 5,000+ customer accounts, optimizing performance across all banking functions.',
+      'Designed loan origination, disbursement and journal-entry processes for retail and MSME lending.',
+      'Automated back-office operations, cutting manual workflows by 40%, and integrated third-party APIs (KYC, disbursement, SMS).',
     ],
-    technologies: ['Banking-as-a-Service', 'Transaction Analysis', 'Technical Support', 'Reporting'],
+    stack: ['Apache Fineract', 'MySQL', 'Loan Lifecycle', 'Reconciliation', 'API Integration'],
   },
   {
     id: 3,
-    title: 'Team Lead Application Support & Database Administrator',
-    company: 'Abbey Mortgage Bank PLC',
-    period: 'February 2022 - October 2023',
-    description: [
-      'Leadership: Led the CBA support team, ensuring prompt issue resolution and clear communication across cross-functional teams.',
-      'System Optimization: Monitored and optimized database performance, ensuring high availability and proactive resource management to prevent failures.',
-      'Disaster Recovery: Spearheaded disaster recovery planning and implementation, safeguarding critical business data.',
-      'Technical Documentation: Developed comprehensive test cases and documentation using Test-Rail & JIRA, enhancing issue identification and resolution processes.',
-      'Strategic Collaboration: Collaborated with management to prioritize tasks and projects based on business needs and current issues.'
+    role: 'Application Support Engineer (BaaS Operations)',
+    company: 'VFD Tech',
+    period: 'Nov 2023 – Sep 2024',
+    location: 'Lagos, Nigeria',
+    summary:
+      'Front-line support for Banking-as-a-Service transaction processing across VFD Group entities.',
+    highlights: [
+      'Monitored API and payment-gateway transactions for accuracy and availability across BaaS products.',
+      'Produced daily operational and transaction reports that drove decisions and resolved customer-impacting issues.',
     ],
-    technologies: ['Database Administration', 'Test-Rail', 'JIRA', 'Disaster Recovery'],
+    stack: ['Banking-as-a-Service', 'SQL', 'Postman', 'JIRA'],
   },
   {
     id: 4,
-    title: 'Network Admin & DBA',
+    role: 'Team Lead, CBA, Database & Digital Channels',
     company: 'Abbey Mortgage Bank PLC',
-    period: 'March 2020 - January 2022',
-    description: [
-      'Network Management: Implemented network changes and managed firewalls across 8 branches, ensuring compliance with regulatory requirements.',
-      'Database Administration: Oversaw database administration, including backup, replication, and user access management.',
-      'Security Measures: Implemented robust security measures to protect data from unauthorized access and potential breaches.',
-      'Traffic Analysis: Conducted in-depth analysis of traffic patterns to identify and resolve bottlenecks within the system architecture.'
+    period: 'Feb 2022 – Oct 2023',
+    location: 'Lagos, Nigeria',
+    summary:
+      'Led the core banking support team and owned database performance, high availability and disaster recovery.',
+    highlights: [
+      'Restructured escalation workflows between IT and operations, cutting unresolved tickets by 30%.',
+      'Ensured availability of digital channels (Mobile, Card, USSD, Internet Banking) and optimized MSSQL performance via query tuning.',
+      'Spearheaded disaster-recovery tests across critical infrastructure; improved bug-resolution cycles by 25% via structured JIRA/TestRail workflows.',
     ],
-    technologies: ['Network Management', 'Database Administration', 'Security', 'Traffic Analysis'],
+    stack: ['MSSQL', 'MySQL', 'Disaster Recovery', 'TestRail', 'JIRA'],
   },
   {
     id: 5,
-    title: 'Quality Assurance & Network Tester',
-    company: 'Xiaomi Technologies',
-    period: 'September 2021 - September 2022',
-    description: [
-      'Functional Testing: Performed comprehensive functional and network testing on Xiaomi mobile devices across software release stages.',
-      'Test Management: Created and executed manual test cases using TestRail and tracked bugs via JIRA.',
-      'Defect Management: Identified, prioritized, and documented defects; collaborated with developers for timely resolutions.',
-      'Process Improvement: Maintained detailed test documentation and contributed to process improvement initiatives.'
+    role: 'Lead Network Administrator, DBA & Infrastructure',
+    company: 'Abbey Mortgage Bank PLC',
+    period: 'Mar 2020 – Jan 2022',
+    location: 'Lagos, Nigeria',
+    summary:
+      'Managed critical banking infrastructure and database operations across multiple branches.',
+    highlights: [
+      'Implemented security and control measures for data integrity and regulatory compliance.',
+      'Managed database backup, replication and access control; supported business continuity and DR planning.',
     ],
-    technologies: ['TestRail', 'JIRA', 'Quality Assurance', 'Network Testing'],
+    stack: ['MSSQL', 'Networking', 'Firewalls', 'Backup & DR'],
   },
   {
     id: 6,
-    title: 'Technical Support Engineer',
-    company: 'Abbey Mortgage Bank PLC',
-    period: 'June 2017 - February 2020',
-    description: [
-      'Technical Support: Provided bank-wide technical support, including workstation allocation, installation, and incident log management.',
-      'E-Channels Support: Supported e-channels platforms, ensuring optimal uptime and performance.'
+    role: 'Quality Assurance Engineer',
+    company: 'Xiaomi Technologies (Contract)',
+    period: 'Sep 2021 – Sep 2022',
+    location: 'Remote',
+    summary:
+      'Functional and network testing across Xiaomi device software release stages.',
+    highlights: [
+      'Designed test plans, scenarios and scripts; tracked defects via JIRA and TestRail across releases.',
     ],
-    technologies: ['Technical Support', 'E-Channels', 'Incident Management'],
-  }
+    stack: ['TestRail', 'JIRA', 'QA', 'Network Testing'],
+  },
+  {
+    id: 7,
+    role: 'Technical Support Engineer',
+    company: 'Abbey Mortgage Bank PLC',
+    period: 'Jun 2017 – Feb 2020',
+    location: 'Lagos, Nigeria',
+    summary:
+      'Enterprise-wide technical support and e-channels platform operations.',
+    highlights: [
+      'Supported e-channels platforms (mobile, USSD, cards) ensuring optimal uptime across departments.',
+    ],
+    stack: ['IT Support', 'E-Channels', 'Incident Management'],
+  },
 ];
 
-export const education: Education[] = [
+export const skillCategories: SkillCategory[] = [
+  {
+    id: 'backend',
+    label: 'Backend & Services',
+    skills: ['NestJS', 'TypeScript', 'Node.js', 'Fastify', 'REST APIs', 'BullMQ', 'Redis'],
+  },
+  {
+    id: 'data',
+    label: 'Data & Storage',
+    skills: ['MySQL', 'Redis', 'PostgreSQL', 'Apache Fineract', 'SQL', 'Backup & DR'],
+  },
+  {
+    id: 'banking',
+    label: 'Banking Domain',
+    skills: ['NIBSS NIP', 'ISO 8583', 'Banking-as-a-Service', 'Outbox Pattern', 'Reconciliation', 'Loan Lifecycle'],
+  },
+  {
+    id: 'infra',
+    label: 'Infrastructure & DevOps',
+    skills: ['Docker', 'Docker Compose', 'Traefik', 'GitHub Actions', 'VPS / k8s', 'PM2'],
+  },
+];
+
+export const education: EducationEntry[] = [
   {
     id: 1,
-    degree: 'Higher National Diploma: Computer Science',
+    degree: 'Higher National Diploma — Computer Science',
     institution: 'Yaba College of Technology',
-    period: '2020- 2022',
-    description: 'Lagos, Nigeria',
+    period: '2020 – 2022',
   },
   {
     id: 2,
-    degree: 'National Diploma: Computer Hardware Engineering',
+    degree: 'National Diploma — Computer Hardware Engineering',
     institution: 'Dalewares Institute of Technology',
-    period: '2015 - 2017',
-    description: 'Lagos, Nigeria',
+    period: '2015 – 2017',
   },
-  {
-    id: 3,
-    degree: 'Database & Data Processing with AWS',
-    institution: 'AWS',
-    period: '2023',
-    description: 'Certification',
-  },
-  {
-    id: 4,
-    degree: 'ITIL V4 Foundation',
-    institution: 'People Cert',
-    period: '2021',
-    description: 'Certificate in IT Service Management',
-  },
-  {
-    id: 5,
-    degree: 'Sophos XG Firewall Administrator',
-    institution: 'Sophos',
-    period: '2018',
-    description: 'Certification',
-  }
 ];
 
-export const skills: Skill[] = [
-  { id: 1, name: 'Core Banking System Administration', level: 95, category: 'Technical' },
-  { id: 2, name: 'Database Management & Administration', level: 90, category: 'Technical' },
-  { id: 3, name: 'Digital Transformation', level: 85, category: 'Business' },
-  { id: 4, name: 'Transaction Analysis', level: 90, category: 'Technical' },
-  { id: 5, name: 'Technical Documentation', level: 85, category: 'Technical' },
-  { id: 6, name: 'Disaster Recovery Planning', level: 85, category: 'Technical' },
-  { id: 7, name: 'Fintech Integration', level: 80, category: 'Technical' },
-  { id: 8, name: 'Software Engineering', level: 45, category: 'Technical' },
-  { id: 9, name: 'System Monitoring', level: 90, category: 'Technical' },
-  { id: 10, name: 'JIRA', level: 90, category: 'Tools' },
-  { id: 11, name: 'Test-Rail', level: 85, category: 'Tools' }
+export const certifications: Certification[] = [
+  { id: 1, name: 'Database & Data Processing with AWS', issuer: 'Amazon Web Services', year: '2023' },
+  { id: 2, name: 'ITIL v4 Foundation', issuer: 'PeopleCert', year: '2021' },
+  { id: 3, name: 'Sophos XG Firewall Administrator', issuer: 'Sophos', year: '2018' },
 ];
 
 export const projects: Project[] = [
   {
     id: 1,
-    title: 'ISO27001 Implementation',
-    description: 'Played a key role in implementing ISO27001 strategies, improving network security and information management bank wide. This project enhanced the overall security posture and compliance of the organization.',
-    technologies: ['ISO27001', 'Network Security', 'Information Management', 'Compliance'],
-    imageUrl: 'https://images.pexels.com/photos/60504/security-protection-anti-virus-software-60504.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
+    slug: 'bellmonie-nip-simulator',
+    title: 'BellMonie NIP Simulator',
+    subtitle: 'Mock NIBSS switch, fault injection and 3-source reconciliation',
+    role: 'Engineering Lead / Platform Engineer',
+    year: '2026',
+    status: 'live',
+    summary:
+      'A NestJS + Fastify middleware that simulates the entire NIBSS Instant Payments rail — mock switch, mock beneficiary bank and an Apache Fineract shadow ledger — so interbank flows can be tested, broken and reconciled before touching a live switch.',
+    highlights: [
+      'Fault injection: timeouts that resolve via TSQ, duplicate references, insufficient funds',
+      'Outbox pattern for durable async core-banking sync, with idempotency on inbound credits',
+      '3-source drift reconciliation (DB, cache, core) with auto-heal that never zeroes on outage',
+      '87 automated tests across middleware, mock switch and e2e flows',
+    ],
+    metrics: [
+      { value: '87', label: 'automated tests' },
+      { value: '3', label: 'fault classes injected' },
+      { value: '2', label: 'mock institutions' },
+      { value: '3-source', label: 'reconciliation' },
+    ],
+    stack: [
+      { area: 'Middleware', items: ['NestJS', 'Fastify', 'TypeScript'] },
+      { area: 'Data', items: ['Redis', 'Apache Fineract', 'PostgreSQL'] },
+      { area: 'Infra', items: ['Docker', 'GitHub Actions'] },
+      { area: 'Testing', items: ['Jest', 'Supertest'] },
+    ],
+    demoUrl: 'https://bellmonie-middleware.eduvrse.co/v1/banking',
+    featured: true,
+    buildStory: {
+      overview: [
+        'The BellMonie NIP Simulator reproduces the Nigerian Instant Payment rail in miniature: a NestJS/Fastify middleware acting as a bank’s payment engine, a mock NIBSS switch, a mock beneficiary bank, and an Apache Fineract shadow ledger.',
+        'It exists because you cannot safely integration-test a bank’s NIP integration against the live NIBSS switch. A simulator makes the rail deterministic — every success and every failure mode is reproducible on demand.',
+      ],
+      challenge: [
+        'The hard part is not moving money when everything works — it is the failure modes. Timeouts, duplicate references and insufficient funds each have distinct settlement behavior, and getting them wrong loses money or double-spends it.',
+        'A transfer that times out must not be blindly reversed: the switch may already have settled it. It needs a Transaction Status Query (TSQ) loop to resolve the true outcome before funds are released or recovered.',
+      ],
+      architecture: [
+        'Client → Middleware → Mock NIBSS Switch → Mock Beneficiary Bank. The middleware is the bank’s engine: accounts, balances, transactions and the NIP module.',
+        'Wallet balance and the outbox event are written in a single database transaction; a poller posts to the Fineract shadow ledger. A reconciliation job diffs three balance sources — DB, cache and core — every few minutes.',
+      ],
+      implementation: [
+        'Outbound transfers follow hold → name enquiry → fund transfer → capture/release. Funds are reserved before execution; a definitive failure releases the hold.',
+        'Inbound credits carry idempotency keys so a retried NIP push cannot double-credit. TSQ resolution releases holds on definitive failure and keeps them on ambiguity.',
+        'Money is integer kobo end-to-end; sub-kobo values are rejected before they can reach the core.',
+      ],
+      testing: [
+        '87 automated tests (Jest + Supertest) across the middleware, plus the mock switch’s fault-injection harness: account suffixes map to success, insufficient funds, timeout-then-success, timeout-then-failed, unresolved timeout, and duplicate-reference rejection.',
+      ],
+      outcomes: [
+        'Pre-live validation of a real NIP integration without touching the production switch.',
+        'A deterministic regression suite that reproduces every failure class on demand.',
+        'A live, browser-reachable demo of the whole rail.',
+      ],
+      links: [
+        { label: 'Live demo', url: 'https://bellmonie-middleware.eduvrse.co/v1/banking' },
+      ],
+    },
   },
   {
     id: 2,
-    title: 'Database Migration to Hyper-Converged Infrastructure',
-    description: 'Collaborated with the infrastructure team to successfully migrate the bank\'s databases from on-premises infrastructure to a hyper-converged infrastructure, ensuring seamless replication and improved performance.',
-    technologies: ['Database Migration', 'Hyper-Converged Infrastructure', 'Infrastructure', 'Data Replication'],
-    imageUrl: 'https://images.pexels.com/photos/325229/pexels-photo-325229.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
+    slug: 'fineract-core-banking-platform',
+    title: 'Fineract Core Banking Platform',
+    subtitle: 'Deploy, extend and operate Apache Fineract core banking',
+    role: 'Platform Engineer / Engineering Lead',
+    year: '2025',
+    status: 'production',
+    summary:
+      'Took Apache Fineract — the open-source core banking platform — from a vanilla release to a production system for a 5,000+ account microfinance bank: full Docker stack, custom modules, and day-to-day operation.',
+    highlights: [
+      'Full production stack via Docker Compose: MySQL 8, Redis 7, Fineract API, Angular web-app',
+      'Custom Fineract modules for loan origination, disbursement and repayment processing',
+      'VPS deployment with Traefik routing and encrypted offsite backups',
+      'Money safety at the boundary: exact kobo conversion, no float math',
+    ],
+    metrics: [
+      { value: '5,000+', label: 'live accounts' },
+      { value: '3', label: 'custom business modules' },
+      { value: '4', label: 'core services in stack' },
+      { value: '1', label: 'shadow-ledger integration' },
+    ],
+    stack: [
+      { area: 'Core', items: ['Apache Fineract', 'Java 21'] },
+      { area: 'Data', items: ['MySQL 8', 'Redis 7'] },
+      { area: 'Web', items: ['Angular'] },
+      { area: 'Infra', items: ['Docker Compose', 'Traefik', 'VPS / k8s'] },
+    ],
+    featured: true,
+    buildStory: {
+      overview: [
+        'Apache Fineract is the open-source core banking platform that runs microfinance banks and smaller lenders across the developing world. This project took a vanilla Fineract release, made it production-ready for a microfinance bank, and operated it in production.',
+        'The full stack: MySQL 8, Redis 7, the Fineract provider (Java/Spring) and the Angular web app, fronted by Traefik and deployed to a VPS.',
+      ],
+      challenge: [
+        'Vanilla Fineract does not ship a deployable production profile. Secrets handling, migrations, seeding, backups and high availability all had to be engineered around it.',
+        'The core also has sharp edges — currency scaling rules that silently misbehave if you feed the wrong units — so money had to be guarded at the boundary.',
+      ],
+      architecture: [
+        'Docker Compose services: MySQL 8 primary, Redis 7 cache, Fineract provider, Angular web-app. Traefik routes and terminates TLS in front of the stack.',
+        'Custom Fineract modules extend the platform for the bank’s business: loan origination, disbursement and repayment processing.',
+      ],
+      implementation: [
+        'Forked Fineract and added the custom modules; containerized the provisioning path so a fresh environment comes up reproducibly.',
+        'Money safety at the boundary: exact integer-kobo conversion (no float math) and whole-kobo guards before posting to the core.',
+      ],
+      testing: [
+        'Smoke tests and reconciliation runs against live balances; backup/restore drills; the upgrade path rehearsed.',
+        'Reconciliation compares middleware balances to the core and never auto-heals to zero when the core is unreachable.',
+      ],
+      outcomes: [
+        '5,000+ customer accounts served in production with the platform and back-office run end-to-end.',
+        'The loan lifecycle automated end-to-end — origination through disbursement, repayment and collections.',
+      ],
+      links: [],
+    },
   },
-  {
-    id: 3,
-    title: 'Database Archiving Automation',
-    description: 'Pioneered the automation of a periodic database archiving procedure, preventing excessive database growth and optimizing performance. This solution significantly improved system efficiency and reduced maintenance overhead.',
-    technologies: ['Process Automation', 'Database Administration', 'Performance Optimization', 'System Maintenance'],
-    imageUrl: 'https://images.pexels.com/photos/4709285/pexels-photo-4709285.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
-  }
 ];

@@ -1,55 +1,52 @@
 import React from 'react';
-import { education } from '../data/portfolioData';
-import { GraduationCap, Calendar } from 'lucide-react';
+import { education, certifications } from '../data/portfolioData';
+import Section from './ui/Section';
+import Reveal from './ui/Reveal';
 
 const Education: React.FC = () => {
   return (
-    <section id="education" className="py-20 bg-primary-50 dark:bg-primary-800">
-      <div className="container mx-auto px-4">
-        <div className="text-center mb-16">
-          <h2 className="text-3xl md:text-4xl font-heading font-bold text-primary-500 dark:text-white">
-            Education & Certifications
-          </h2>
-          <div className="w-20 h-1 bg-accent-500 mx-auto mt-4 mb-6"></div>
-          <p className="text-primary-400 dark:text-primary-200 max-w-2xl mx-auto">
-            My academic background and professional certifications.
-          </p>
+    <Section
+      id="education"
+      eyebrow="// 05 — CREDENTIALS"
+      title="Education & certifications"
+      banded
+    >
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
+        <div>
+          <h3 className="font-mono text-sm uppercase tracking-wider text-ink-3 mb-4">Education</h3>
+          <div className="space-y-4">
+            {education.map((edu) => (
+              <Reveal key={edu.id}>
+                <div className="border border-night-500 bg-night-800 rounded-sm p-6">
+                  <h4 className="font-heading text-lg text-ink">{edu.degree}</h4>
+                  <p className="mt-1 text-sm text-champagne-400">{edu.institution}</p>
+                  <p className="mt-1 font-mono text-xs text-ink-3">{edu.period}</p>
+                </div>
+              </Reveal>
+            ))}
+          </div>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {education.map((edu) => (
-            <div 
-              key={edu.id}
-              className="bg-white dark:bg-primary-700 rounded-lg shadow-md hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1 overflow-hidden animate-slideInUp"
-            >
-              <div className="bg-primary-500 p-4 flex items-center justify-between">
-                <div className="flex items-center">
-                  <GraduationCap className="w-6 h-6 text-white mr-3" />
-                  <h3 className="text-lg font-bold text-white">
-                    {edu.institution}
-                  </h3>
+        <div>
+          <h3 className="font-mono text-sm uppercase tracking-wider text-ink-3 mb-4">
+            Certifications
+          </h3>
+          <div className="space-y-4">
+            {certifications.map((cert) => (
+              <Reveal key={cert.id} delay={0.05}>
+                <div className="border border-night-500 bg-night-800 rounded-sm p-6 flex items-start justify-between gap-4">
+                  <div>
+                    <h4 className="font-heading text-lg text-ink">{cert.name}</h4>
+                    <p className="mt-1 text-sm text-champagne-400">{cert.issuer}</p>
+                  </div>
+                  <span className="font-mono text-xs text-ink-3 whitespace-nowrap">{cert.year}</span>
                 </div>
-                <span className="text-sm text-white bg-primary-600 px-3 py-1 rounded-full">
-                  {edu.period}
-                </span>
-              </div>
-              
-              <div className="p-6">
-                <h4 className="text-xl font-bold text-primary-500 dark:text-white mb-3">
-                  {edu.degree}
-                </h4>
-                
-                {edu.description && (
-                  <p className="text-primary-400 dark:text-primary-200">
-                    {edu.description}
-                  </p>
-                )}
-              </div>
-            </div>
-          ))}
+              </Reveal>
+            ))}
+          </div>
         </div>
       </div>
-    </section>
+    </Section>
   );
 };
 

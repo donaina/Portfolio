@@ -1,3 +1,71 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base {
+  body {
+    @apply bg-night-950 text-ink antialiased;
+  }
+
+  ::selection {
+    background-color: rgba(228, 197, 128, 0.25);
+    color: #eaf0fa;
+  }
+
+  ::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+  ::-webkit-scrollbar-track {
+    background: #0a101f;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: #223056;
+    border-radius: 5px;
+    border: 2px solid #0a101f;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: #bc944f;
+  }
+
+  :focus-visible {
+    outline: 2px solid #e4c580;
+    outline-offset: 2px;
+  }
+}
+
+@layer utilities {
+  /* Subtle engineering grid backdrop */
+  .bg-grid {
+    background-image:
+      linear-gradient(to right, rgba(148, 163, 184, 0.05) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(148, 163, 184, 0.05) 1px, transparent 1px);
+    background-size: 64px 64px;
+    mask-image: radial-gradient(ellipse 80% 60% at 50% 0%, black 40%, transparent 100%);
+  }
+
+  /* HUD-style corner brackets for cards */
+  .frame-corners {
+    position: relative;
+  }
+  .frame-corners::before,
+  .frame-corners::after {
+    content: '';
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    border-color: #d4af6a;
+    border-style: solid;
+    pointer-events: none;
+  }
+  .frame-corners::before {
+    top: -1px;
+    left: -1px;
+    border-width: 1px 0 0 1px;
+  }
+  .frame-corners::after {
+    bottom: -1px;
+    right: -1px;
+    border-width: 0 1px 1px 0;
+  }
+}

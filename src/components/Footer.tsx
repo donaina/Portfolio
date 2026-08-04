@@ -1,66 +1,52 @@
 import React from 'react';
 import { personalInfo } from '../data/portfolioData';
-import { Heart } from 'lucide-react';
+import { Link } from 'react-scroll';
 
 const Footer: React.FC = () => {
   const currentYear = new Date().getFullYear();
-  
+
+  const navItems = [
+    { id: 'home', label: 'Home' },
+    { id: 'projects', label: 'Projects' },
+    { id: 'experience', label: 'Experience' },
+    { id: 'contact', label: 'Contact' },
+  ];
+
   return (
-    <footer className="bg-primary-500 dark:bg-primary-900 text-white py-8">
+    <footer className="bg-night-900 border-t border-line py-10">
       <div className="container mx-auto px-4">
-        <div className="flex flex-col md:flex-row justify-between items-center">
-          <div className="mb-4 md:mb-0">
-            <h3 className="text-xl font-bold">{personalInfo.name}</h3>
-            <p className="text-primary-200 text-sm mt-1">{personalInfo.title}</p>
-          </div>
-          
-          <div className="flex flex-col items-center">
-            <p className="text-primary-200 text-sm">
-              © {currentYear} All Rights Reserved
+        <div className="flex flex-col md:flex-row justify-between items-center gap-6">
+          <div>
+            <p className="font-heading text-lg font-semibold text-ink">
+              {personalInfo.name} <span className="text-champagne-400">· {personalInfo.title}</span>
             </p>
-            <p className="text-primary-200 text-xs mt-1 flex items-center">
-              Made with <Heart size={12} className="mx-1 text-accent-500" /> by Ayoola Aina
+            <p className="mt-1 font-mono text-xs text-ink-3">
+              money-safe by default
             </p>
           </div>
-          
-          <div className="mt-4 md:mt-0">
-            <nav>
-              <ul className="flex space-x-4">
-                <li>
-                  <a 
-                    href="#home" 
-                    className="text-primary-200 hover:text-white transition-colors"
+
+          <nav aria-label="Footer">
+            <ul className="flex flex-wrap justify-center gap-x-6 gap-y-2">
+              {navItems.map((item) => (
+                <li key={item.id}>
+                  <Link
+                    to={item.id}
+                    spy={true}
+                    smooth={true}
+                    offset={-72}
+                    duration={500}
+                    className="text-sm text-ink-2 hover:text-champagne-400 transition-colors cursor-pointer"
                   >
-                    Home
-                  </a>
+                    {item.label}
+                  </Link>
                 </li>
-                <li>
-                  <a 
-                    href="#about" 
-                    className="text-primary-200 hover:text-white transition-colors"
-                  >
-                    About
-                  </a>
-                </li>
-                <li>
-                  <a 
-                    href="#experience" 
-                    className="text-primary-200 hover:text-white transition-colors"
-                  >
-                    Experience
-                  </a>
-                </li>
-                <li>
-                  <a 
-                    href="#contact" 
-                    className="text-primary-200 hover:text-white transition-colors"
-                  >
-                    Contact
-                  </a>
-                </li>
-              </ul>
-            </nav>
-          </div>
+              ))}
+            </ul>
+          </nav>
+
+          <p className="font-mono text-xs text-ink-3">
+            © {currentYear} Ayoola Aina
+          </p>
         </div>
       </div>
     </footer>
