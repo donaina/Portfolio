@@ -205,6 +205,7 @@ export const projects: Project[] = [
     summary:
       'A NestJS + Fastify middleware that simulates the entire NIBSS Instant Payments rail — mock switch, mock beneficiary bank and an Apache Fineract shadow ledger — so interbank flows can be tested, broken and reconciled before touching a live switch.',
     highlights: [
+      'Redis write-through balance cache that keeps Fineract off the transfer hot path, so accounts with large transaction volumes stay fast',
       'Fault injection: timeouts that resolve via TSQ, duplicate references, insufficient funds',
       'Outbox pattern for durable async core-banking sync, with idempotency on inbound credits',
       '3-source drift reconciliation (DB, cache, core) with auto-heal that never zeroes on outage',
@@ -227,10 +228,12 @@ export const projects: Project[] = [
     buildStory: {
       overview: [
         'The NIP Simulator reproduces the Nigerian Instant Payment rail in miniature: a NestJS/Fastify middleware acting as a bank’s payment engine, a mock NIBSS switch, a mock beneficiary bank, and an Apache Fineract shadow ledger.',
-        'It exists because you cannot safely integration-test a bank’s NIP integration against the live NIBSS switch. A simulator makes the rail deterministic — every success and every failure mode is reproducible on demand.',
+        'It exists to prove out a specific fix. Apache Fineract computes an account’s balance from its transaction history, so accounts with large transaction volumes get progressively slower to read and post to — and against NIP’s tight NIBSS timeout window, a slow core lookup can tip an otherwise-healthy transfer into a timeout. The simulator is where I validated a Redis write-through balance cache that keeps those checks fast regardless of an account’s history, without giving up Fineract as the system of record.',
+        'It also makes the rail deterministic: because you cannot safely integration-test a bank’s NIP integration against the live NIBSS switch, every success and every failure mode here is reproducible on demand.',
       ],
       challenge: [
-        'The hard part is not moving money when everything works — it is the failure modes. Timeouts, duplicate references and insufficient funds each have distinct settlement behavior, and getting them wrong loses money or double-spends it.',
+        'Fineract derives an account’s balance from its full transaction history, so high-volume accounts get slower to read and post to as they grow. Putting a Redis cache in front of the core makes balance checks constant-time — but the cache then has to be provably correct, because a stale or drifted balance would block a legitimate transfer or, worse, allow an overdraft.',
+        'Correctness is hardest in the failure modes. Timeouts, duplicate references and insufficient funds each have distinct settlement behavior, and getting them wrong loses money or double-spends it.',
         'A transfer that times out must not be blindly reversed: the switch may already have settled it. It needs a Transaction Status Query (TSQ) loop to resolve the true outcome before funds are released or recovered.',
       ],
       architecture: [
@@ -238,6 +241,7 @@ export const projects: Project[] = [
         'Wallet balance and the outbox event are written in a single database transaction; a poller posts to the Fineract shadow ledger. A reconciliation job diffs three balance sources — DB, cache and core — every few minutes.',
       ],
       implementation: [
+        'Balance reads and holds go through a Redis write-through cache instead of the core, so an account’s transaction volume no longer drives transfer latency. Every movement is replayed to the Fineract shadow ledger through the outbox, and the 3-source reconciliation catches any drift between cache, DB and core — healing toward the core, but never to zero when it is unreachable.',
         'Outbound transfers follow hold → name enquiry → fund transfer → capture/release. Funds are reserved before execution; a definitive failure releases the hold.',
         'Inbound credits carry idempotency keys so a retried NIP push cannot double-credit. TSQ resolution releases holds on definitive failure and keeps them on ambiguity.',
         'Money is integer kobo end-to-end; sub-kobo values are rejected before they can reach the core.',
