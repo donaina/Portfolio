@@ -49,7 +49,7 @@ export const experiences: Experience[] = [
       'Leading the engineering team building BellBank’s payment infrastructure: a NestJS/TypeScript microservices middleware over Apache Fineract, migrated from legacy Java services.',
     highlights: [
       'Own the NIBSS Instant Payment (NIP) integration end-to-end, plus Banking-as-a-Service (Bloc) partner integration.',
-      'Designed the BellMonie NIP Simulator — a fault-injecting mock switch, shadow ledger, outbox pattern and 3-source drift reconciliation (68 tests).',
+      'Designed the NIP Simulator — a fault-injecting mock switch, shadow ledger, outbox pattern and 3-source drift reconciliation (68 tests).',
       'Redis write-through balance caching and BullMQ-based async processing for resilient core-banking writes.',
       'Docker + Traefik blue-green deployments and GitHub Actions CI on a VPS migration that eliminated downtime risk.',
     ],
@@ -58,9 +58,10 @@ export const experiences: Experience[] = [
   {
     id: 2,
     role: 'Core Banking Platform & Operations Lead',
-    company: 'KATSU Network Limited (SABI Africa)',
-    period: 'Jun 2024 – Jul 2026',
+    company: 'KATSU MFB (SABI Africa)',
+    period: 'Jun 2024 – Present',
     location: 'Lagos, Nigeria',
+    current: true,
     summary:
       'Set up and ran a microfinance bank’s core banking platform from inception — Apache Fineract, account structure, loan workflows, reconciliation and regulatory readiness.',
     highlights: [
@@ -87,7 +88,7 @@ export const experiences: Experience[] = [
   },
   {
     id: 4,
-    role: 'Team Lead, CBA, Database & Digital Channels',
+    role: 'Team Lead, CBA, Database & Digital Channels Support',
     company: 'Abbey Mortgage Bank PLC',
     period: 'Feb 2022 – Oct 2023',
     location: 'Lagos, Nigeria',
@@ -168,12 +169,18 @@ export const skillCategories: SkillCategory[] = [
 export const education: EducationEntry[] = [
   {
     id: 1,
-    degree: 'Higher National Diploma — Computer Science',
-    institution: 'Yaba College of Technology',
-    period: '2020 – 2022',
+    degree: 'BSc Computer Science (in view)',
+    institution: 'University of the People',
+    period: '2025 – 2029',
   },
   {
     id: 2,
+    degree: 'Higher National Diploma — Computer Science',
+    institution: 'Yaba College of Technology',
+    period: '2020 – 2025',
+  },
+  {
+    id: 3,
     degree: 'National Diploma — Computer Hardware Engineering',
     institution: 'Dalewares Institute of Technology',
     period: '2015 – 2017',
@@ -189,8 +196,8 @@ export const certifications: Certification[] = [
 export const projects: Project[] = [
   {
     id: 1,
-    slug: 'bellmonie-nip-simulator',
-    title: 'BellMonie NIP Simulator',
+    slug: 'nip-simulator',
+    title: 'NIP Simulator',
     subtitle: 'Mock NIBSS switch, fault injection and 3-source reconciliation',
     role: 'Engineering Lead / Platform Engineer',
     year: '2026',
@@ -219,7 +226,7 @@ export const projects: Project[] = [
     featured: true,
     buildStory: {
       overview: [
-        'The BellMonie NIP Simulator reproduces the Nigerian Instant Payment rail in miniature: a NestJS/Fastify middleware acting as a bank’s payment engine, a mock NIBSS switch, a mock beneficiary bank, and an Apache Fineract shadow ledger.',
+        'The NIP Simulator reproduces the Nigerian Instant Payment rail in miniature: a NestJS/Fastify middleware acting as a bank’s payment engine, a mock NIBSS switch, a mock beneficiary bank, and an Apache Fineract shadow ledger.',
         'It exists because you cannot safely integration-test a bank’s NIP integration against the live NIBSS switch. A simulator makes the rail deterministic — every success and every failure mode is reproducible on demand.',
       ],
       challenge: [
