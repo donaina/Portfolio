@@ -31,7 +31,7 @@ export const personalInfo: PersonalInfo = {
   },
   stats: [
     { value: '9+', label: 'years in payments & banking' },
-    { value: '87', label: 'automated tests on the NIP simulator' },
+    { value: '68', label: 'automated tests on the NIP simulator' },
     { value: '5,000+', label: 'accounts on a Fineract core' },
     { value: '3-source', label: 'drift reconciliation' },
   ],
@@ -49,7 +49,7 @@ export const experiences: Experience[] = [
       'Leading the engineering team building BellBank’s payment infrastructure: a NestJS/TypeScript microservices middleware over Apache Fineract, migrated from legacy Java services.',
     highlights: [
       'Own the NIBSS Instant Payment (NIP) integration end-to-end, plus Banking-as-a-Service (Bloc) partner integration.',
-      'Designed the BellMonie NIP Simulator — a fault-injecting mock switch, shadow ledger, outbox pattern and 3-source drift reconciliation (87 tests).',
+      'Designed the BellMonie NIP Simulator — a fault-injecting mock switch, shadow ledger, outbox pattern and 3-source drift reconciliation (68 tests).',
       'Redis write-through balance caching and BullMQ-based async processing for resilient core-banking writes.',
       'Docker + Traefik blue-green deployments and GitHub Actions CI on a VPS migration that eliminated downtime risk.',
     ],
@@ -201,10 +201,10 @@ export const projects: Project[] = [
       'Fault injection: timeouts that resolve via TSQ, duplicate references, insufficient funds',
       'Outbox pattern for durable async core-banking sync, with idempotency on inbound credits',
       '3-source drift reconciliation (DB, cache, core) with auto-heal that never zeroes on outage',
-      '87 automated tests across middleware, mock switch and e2e flows',
+      '68 automated tests across middleware, mock switch and e2e flows',
     ],
     metrics: [
-      { value: '87', label: 'automated tests' },
+      { value: '68', label: 'automated tests' },
       { value: '3', label: 'fault classes injected' },
       { value: '2', label: 'mock institutions' },
       { value: '3-source', label: 'reconciliation' },
@@ -215,7 +215,7 @@ export const projects: Project[] = [
       { area: 'Infra', items: ['Docker', 'GitHub Actions'] },
       { area: 'Testing', items: ['Jest', 'Supertest'] },
     ],
-    demoUrl: 'https://bellmonie-middleware.eduvrse.co/v1/banking',
+    sourceUrl: 'https://github.com/donaina/Fineract-NIP-Simulator',
     featured: true,
     buildStory: {
       overview: [
@@ -236,15 +236,15 @@ export const projects: Project[] = [
         'Money is integer kobo end-to-end; sub-kobo values are rejected before they can reach the core.',
       ],
       testing: [
-        '87 automated tests (Jest + Supertest) across the middleware, plus the mock switch’s fault-injection harness: account suffixes map to success, insufficient funds, timeout-then-success, timeout-then-failed, unresolved timeout, and duplicate-reference rejection.',
+        '68 automated tests (Jest + Supertest) across the middleware, plus the mock switch’s fault-injection harness: account suffixes map to success, insufficient funds, timeout-then-success, timeout-then-failed, unresolved timeout, and duplicate-reference rejection.',
       ],
       outcomes: [
         'Pre-live validation of a real NIP integration without touching the production switch.',
         'A deterministic regression suite that reproduces every failure class on demand.',
-        'A live, browser-reachable demo of the whole rail.',
+        'A public, clone-and-run repo with a browser banking UI that drives the whole rail.',
       ],
       links: [
-        { label: 'Live demo', url: 'https://bellmonie-middleware.eduvrse.co/v1/banking' },
+        { label: 'Source', url: 'https://github.com/donaina/Fineract-NIP-Simulator' },
       ],
     },
   },
