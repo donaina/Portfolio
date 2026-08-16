@@ -316,4 +316,77 @@ export const projects: Project[] = [
       links: [],
     },
   },
+  {
+    id: 3,
+    slug: 'kobo-insights',
+    title: 'Kobo Insights',
+    subtitle: 'Transaction intelligence for Nigerian bank statements',
+    role: 'Full-Stack Engineer',
+    year: '2026',
+    status: 'live',
+    summary:
+      'A clean-room NestJS + React app that ingests a Nigerian bank statement CSV, categorizes every transaction using a deterministic narration rule engine (with optional AI upgrade), and surfaces cash-flow charts, recurring/subscription detection, income analysis, an explainable affordability signal (0–100 score with 20 named reason codes), and a natural-language “Ask your statement” Q&A panel.',
+    highlights: [
+      'Deterministic Nigerian narration categorizer — 60+ ordered rules, 17-category fixed taxonomy — runs fully offline with zero external deps',
+      'Explainable affordability signal: integer-kobo math, base-50 scoring with 20 reason codes (income stability, expense-to-income, gambling exposure, balance buffer, etc.) — shaped to hand off to a future credit-decisioning engine',
+      'Optional AI upgrade (Claude) mirrors the NIP sim’s optional-Redis pattern: zero-config fallback, AI only sees uncategorized rows, Ask panel gracefully shows “AI not configured” hint',
+      'Premium fintech dark theme (champagne accent, Space Grotesk + JetBrains Mono) hand-rolled SVG charts — no chart library',
+      '145 unit tests, Docker compose verified, synthetic Lagos professional seed data (3 months, 141 txns)',
+    ],
+    metrics: [
+      { value: '145', label: 'unit tests' },
+      { value: '17', label: 'transaction categories' },
+      { value: '141', label: 'seeded transactions' },
+      { value: '20', label: 'affordability reason codes' },
+    ],
+    stack: [
+      { area: 'Backend', items: ['NestJS 10', 'Fastify', 'Prisma', 'SQLite'] },
+      { area: 'Frontend', items: ['React 18', 'Vite', 'Tailwind', 'TypeScript'] },
+      { area: 'AI', items: ['Claude (opt-in)', 'Anthropic SDK'] },
+      { area: 'Testing', items: ['Jest', 'Supertest'] },
+    ],
+    featured: true,
+    sourceUrl: 'https://github.com/donaina/kobo-insights',
+    buildStory: {
+      overview: [
+        'Kobo Insights turns a Nigerian bank statement CSV into actionable financial intelligence: category breakdowns, cash-flow trends, recurring bills, income sources and an explainable affordability snapshot.',
+        'It exists because no open, offline-first tool does this for Nigerian data — narration patterns are too specific (NIP/ transfer markers, VTU, DStv, Bet9ja, Piggyvest, etc.) and generic spend-categorizers miss them.',
+        'The deliberate architecture choice: rules-first, AI-opt-in. The categorizer runs entirely on deterministic rules; setting ANTHROPIC_API_KEY upgrades uncategorized rows and unlocks the Ask panel. This mirrors the NIP Simulator’s optional-Redis balance cache — zero-config clone-and-run, better with the optional service.',
+        'Money is integer kobo end-to-end; no floating-point. The affordability signal is transparent: every point traces to a named reason a human can audit. It is not a black-box ML score; it is a bridge toward a future credit-decisioning engine.',
+      ],
+      challenge: [
+        'Nigerian bank narration variance: the same merchant can appear as “POS PURCHASE SHOPRITE”, “WEB PURCHASE SHOPRITE”, “SHOPRITE IKEJA” — rules must handle the variance while keeping false positives low.',
+        'Running balance reconstruction: statements vary between Debit/Credit columns and single Amount+Type columns; CSV parsing must be tolerant and reconstruct opening/closing balances correctly.',
+        'Rules ordering precedence: a Bet9ja top-up arrives as “NIP/TRF/BET9JA/...” — the betting rule must win before the generic transfer catch-all. The rule engine is entirely top-to-bottom first-match-wins.',
+        'AI as upgrade, not dependency: the app must be fully functional without ANTHROPIC_API_KEY. The Ask panel shows a clear hint instead of erroring; categorization quality is 100% rules on the seeded sample.',
+      ],
+      architecture: [
+        'Backend modules: ingest (CSV parser) → categorization (rules + optional AI) → insights (cashflow, merchants, recurring, income) → affordability (feature extraction + scored with reason codes) → ask (compact structured context → LLM → answer). Each module is independently testable.',
+        'Frontend: single dashboard SPA with statement selector, CSV upload, summary cards, hand-rolled SVG charts (cash-flow bars, category donut), top merchants, recurring list, income card, affordability card, Ask panel, and filterable transactions table with RULES/AI provenance badges.',
+        'Data flow: CSV → normalized txns (kobo, ISO dates) → Prisma/SQLite → categorization → insights aggregation → affordability features → scored with reason codes. All paths work without AI.',
+      ],
+      implementation: [
+        'Categorization: 60+ RegExp rules over upper-cased narrations; 17-category taxonomy with spendClass metadata (income/essential/discretionary/transfer/savings/charges/debt) driving affordability features. Counterparty extraction from transfer narrations via FROM/TO/FRM markers.',
+        'Insights: monthly cash-flow (in/out/net), category breakdown, top merchants by outflow, recurring detection (≥3 hits, median gap → weekly/biweekly/monthly, amount stability ±35%), income detection (explicit income credits + recurring sizeable credits ≥₦5k median, stability = 1 − CV).',
+        'Affordability: 13 numeric features → base 50 score → 20 signed reason codes (NO_INCOME −25, INCOME_STABLE +10, LIVES_WITHIN_MEANS +14, OVERSPENDS −18, HIGH_GAMBLING −16, HITS_ZERO −10, HEALTHY_BUFFER +8, etc.) → clamp 0..100 → band A≥80, B≥65, C≥50, D≥35, E. Disclaimer baked in.',
+        'Ask panel: compact context builder (period, totals, monthly CF, category spend, income sources, recurring, top merchants, affordability reasons, 40 largest txns by amount) → optional Claude Sonnet → answer. Graceful “AI not configured” banner when key absent.',
+        'Docker: multi-stage builds (NestJS builder → node:20-alpine runner with prisma migrate deploy; Vite builder → nginx:alpine SPA server). docker-compose.yml with API + Web, SQLite volume, API healthcheck.',
+        'Tests: 145 unit tests (money helpers, 60+ Nigerian narration cases for categorizer, CSV parser edge cases, cash-flow/merchants/recurring/income exact assertions). Synthetic seed data generated by mulberry32 PRNG (seed 20250809).',
+      ],
+      testing: [
+        '145 Jest unit tests pass; categorizer rules verified against 60+ Nigerian narration patterns covering all 17 categories; CSV parser handles ISO, DD-Mon-YYYY, DD/MM/YYYY, Amount+Type, signed Amount, quoted fields with commas.',
+        'Insights exact assertions: cashflowByMonth, categoryBreakdown, topMerchants, detectRecurring (weekly/monthly cadence, stability filter), detectIncome (explicit + recurring credits, stability = 1 − CV).',
+        'Affordability exact assertions: score compute with reason codes, band mapping, clamp 0..100.',
+        'Synthetic seed: 3 months, 141 txns (136 debits, 5 credits), Lagos professional ₦520k/mo salary, closing ₦930,672 — renders fully in dashboard.',
+      ],
+      outcomes: [
+        'Clone-and-run: npm install → prisma migrate dev → npm run seed → docker compose up — no external services required.',
+        'Dashboard renders seeded statement: ₦520k/mo income, stability 0.995; recurring detects DStv, Netflix, Spotify, Piggyvest, Bet9ja, IKEDC; affordability Band B (68) with 8 reason codes.',
+        'PR-first published to donaina/kobo-insights with full CI, safety scan and documentation.',
+      ],
+      links: [
+        { label: 'Source', url: 'https://github.com/donaina/kobo-insights' },
+      ],
+    },
+  },
 ];
