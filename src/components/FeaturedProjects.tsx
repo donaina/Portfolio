@@ -34,7 +34,7 @@ const FeaturedProjects: React.FC = () => {
       eyebrow="// 02 — SELECTED WORK"
       title="Selected work"
       banded
-      description="The systems I build move money. These are the projects I can discuss publicly — from simulation and analytics to core banking and staging infrastructure."
+      description="The systems I build move money. Here are the two I can talk about publicly — one simulated, one in production."
     >
       <div className="space-y-12">
         {featured.map((project, idx) => (
@@ -56,12 +56,6 @@ const FeaturedProjects: React.FC = () => {
                         <span className="flex items-center gap-1.5 font-mono text-xs text-champagne-400">
                           <span className="w-1.5 h-1.5 rounded-full bg-champagne-400" />
                           in production
-                        </span>
-                      )}
-                      {project.status === 'staging' && (
-                        <span className="flex items-center gap-1.5 font-mono text-xs text-warning-500">
-                          <span className="w-1.5 h-1.5 rounded-full bg-warning-500" />
-                          staging rollout
                         </span>
                       )}
                     </div>
