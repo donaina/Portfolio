@@ -201,7 +201,7 @@ export const projects: Project[] = [
     subtitle: 'A safer ledger and service architecture for digital banking',
     role: 'Engineering Lead / Payments & Core Banking Engineer',
     year: '2026',
-    status: 'staging',
+    status: 'production',
     summary:
       'A multi-service digital-banking platform that connects customer onboarding, wallet balances, core banking, payment rails, notifications and utility payments. I strengthened the money-movement controls, clarified the BaaS account model, and prepared the services for an isolated staging rollout.',
     highlights: [
