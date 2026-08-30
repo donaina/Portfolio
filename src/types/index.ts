@@ -54,7 +54,7 @@ export interface Project {
   subtitle: string;
   role: string;
   year: string;
-  status: 'live' | 'production' | 'internal';
+  status: 'live' | 'production' | 'staging' | 'internal';
   summary: string;
   highlights: string[];
   metrics: ProjectMetric[];
