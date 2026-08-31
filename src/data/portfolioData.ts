@@ -453,4 +453,78 @@ export const projects: Project[] = [
       ],
     },
   },
+  {
+    id: 4,
+    slug: "meterflow",
+    title: "MeterFlow",
+    subtitle: "High-throughput usage-based billing engine with double-entry ledger",
+    role: "Backend & Systems Architect",
+    year: "2026",
+    status: "live",
+    summary:
+      "A production-grade usage metering and subscription billing engine built with NestJS, PostgreSQL, Redis, and BullMQ. Solves high-throughput event ingestion, atomic counter aggregation, config-driven dynamic pricing (flat fee, per-unit, graduated tiers, volume discounts), atomic immutable invoice finalization, and balanced double-entry accounting ledger guarantees with zero floating-point arithmetic.",
+    highlights: [
+      "Zero floating-point currency or quantity math — evaluated and stored strictly in integer cents (BigInt) with zero IEEE 754 precision drift",
+      "High-throughput hybrid aggregation tier: in-memory Redis atomic INCRBY counters flushed durably to PostgreSQL composite upserts with dirty-key tracking",
+      "Database-enforced idempotency: unique constraints on event_id return 202 Accepted on new events and 200 OK on duplicates without double-counting",
+      "Config-driven Strategy Pattern pricing engine: JSONB pricing models and plan versioning updated dynamically with zero code redeploys",
+      "Single-transaction atomic invoice finalization writing balanced double-entry ledger journal entries (Σ Debits == Σ Credits) with strict 403 Forbidden immutability",
+      "35 unit & fast-check property tests over 4,000+ randomized invariant runs, 21 E2E tests, and live interactive React odometer UI with zero float drift",
+    ],
+    metrics: [
+      { value: "35+", label: "unit & property tests" },
+      { value: "100%", label: "ledger balance parity" },
+      { value: "4,000+", label: "property test runs" },
+      { value: "0", label: "floating-point drift" },
+    ],
+    stack: [
+      { area: "Backend", items: ["NestJS 10", "TypeScript", "Prisma", "BullMQ", "ioredis"] },
+      { area: "Data & Cache", items: ["PostgreSQL 16", "Redis 7", "Docker Compose"] },
+      { area: "Testing", items: ["Jest", "Fast-Check (PBT)", "Supertest", "Playwright MCP"] },
+      { area: "Frontend", items: ["React 19", "Vite", "Tailwind CSS", "Recharts"] },
+    ],
+    featured: true,
+    sourceUrl: "https://github.com/donaina/MeterFlow",
+    buildStory: {
+      overview: [
+        "MeterFlow is a high-throughput usage-based billing and subscription metering engine built to eliminate the two biggest risks in usage billing: financial drift from floating-point arithmetic and lost usage events under burst ingestion.",
+        "Modern infrastructure and AI products bill on dynamic consumption — API requests, LLM inference tokens, compute worker hours, and storage gigabytes. Inaccurate aggregation or delayed pricing calculations lead to catastrophic billing disputes and revenue leakage.",
+        "MeterFlow enforces six non-negotiable architectural invariants: zero floating-point arithmetic (integer cents throughout), strictly append-only raw usage events, immutable finalized invoices, balanced double-entry ledger journal entries on every invoice, database-enforced idempotency, and versioned JSONB pricing strategies that update with zero code redeployments.",
+        "The architecture pairs a high-speed in-memory Redis aggregation tier for sub-millisecond atomic INCRBY counters with durable PostgreSQL composite upserts and background cron flushes. A companion React web client provides a real-time rolling odometer counter, live pricing tier simulator, double-entry auditor, and an idempotency playground.",
+      ],
+      challenge: [
+        "High-concurrency ingestion & lost updates: Concurrent bursts of identical or distinct usage events can cause race conditions and lost increments if aggregated via traditional naive database read-modify-write patterns.",
+        "Floating-point arithmetic drift: Standard IEEE 754 floating-point numbers introduce minute fractional cent rounding errors that compound across millions of events, resulting in unbalanced invoices and ledger discrepancies.",
+        "Pricing rule flexibility vs deployment velocity: Pricing models change frequently (e.g. introducing new graduated brackets or promotional free allowances). Hardcoded pricing logic requires engineering redeployments and risks historical calculation drift.",
+        "Financial auditability & invoice mutation: Invoices must never change retroactively once issued. Financial integrity requires double-entry bookkeeping where every debit strictly matches a credit in an append-only journal.",
+      ],
+      architecture: [
+        "Ingestion & Aggregation Pipeline: Incoming events (POST /events) are validated with class-validator, written to the append-only usage_events log, and immediately incremented in Redis via atomic INCRBY usage:{customerId}:{featureKey}:{periodKey}. Dirty keys are tracked in a Redis set and periodically or on-demand flushed into PostgreSQL usage_records using atomic composite upserts on (customer_id, feature_key, period_start, period_end).",
+        "Strategy Pattern Pricing Engine: A pluggable Strategy Pattern (FlatFeeStrategy, PerUnitStrategy, TieredGraduatedStrategy, VolumeStrategy) resolves dynamically from versioned plans.pricing_config JSONB schemas. Live calculations (POST /pricing/preview) evaluate usage without touching persistent state or requiring code restarts.",
+        "Billing & Ledger Settlement: Single atomic ACID transactions (prisma.$transaction) generate invoices, itemized line items, and balanced append-only journal entries (DEBIT Accounts Receivable vs CREDIT Revenue). Strict 403 Forbidden guards prevent in-place mutation of finalized invoices.",
+      ],
+      implementation: [
+        "Append-Only Ingestion: Event deduplication enforced via database-level @unique(event_id). First request returns 202 Accepted; subsequent identical requests return 200 OK without double-incrementing counters.",
+        "Hybrid Aggregation Tier: In-memory atomic Redis buffer handles high-throughput spikes with automatic fallback to direct PostgreSQL upserts if Redis is unreachable. Late and out-of-order events are deterministically routed to their respective period partition based on event timestamp.",
+        "Config-Driven Pricing: Versioned JSONB pricing config models base fees, allowances, graduated progressive brackets, and volume discount inheritance. Plan updates automatically increment version numbers, preserving historical auditability.",
+        "Double-Entry Bookkeeping: LedgerService programmatically asserts sum(debits) == sum(credits) on every finalize. Zero-dollar or negative balances are strictly validated against chart of accounts invariants.",
+        "Property-Based Testing (PBT): Integrated fast-check to run 4,000+ randomized permutations verifying mathematical monotonicity (cost(q+1) >= cost(q)), allowance bounds, integer constraints, and debit-credit parity across arbitrary bracket configurations.",
+        "Observability & Client Playground: Correlation ID tracing (x-request-id), structured JSON telemetry interceptors, interactive OpenAPI / Swagger UI at /api/docs, and a tactile React web client featuring mechanical rolling odometers and an idempotency storm simulator.",
+      ],
+      testing: [
+        "35 Unit & Property Suites: 100% pass rate across pricing strategies, aggregation flushing, period boundary utilities, double-entry ledger balance checkers, and fast-check randomized invariant runs.",
+        "21 End-to-End Integration Tests: 50 concurrent parallel ingestion requests proved 0 lost updates; 20-request concurrent duplicate storm proved exactly 1 recorded event and 19 suppressed duplicates; immutable invoice modification attempts proved strict 403 Forbidden rejection.",
+        "End-to-End Browser UAT: Automated Playwright MCP suite verified all 5 frontend screens: live rolling odometers, zero-redeploy pricing editor, ledger auditor, idempotency storm runner, and visual audit trail.",
+      ],
+      outcomes: [
+        "End-to-End Financial Accuracy: Zero floating-point drift achieved across the entire pipeline with 100% balanced double-entry accounting records.",
+        "High-Throughput Ingestion: Verified zero lost updates and deterministic duplicate suppression under 50-request burst loads and concurrent storms.",
+        "Production Ready: Documented with 9 Architectural Decision Records (ADRs), complete interactive Swagger API, color-coded live demo script, and Postman collection.",
+      ],
+      links: [
+        { label: "Source Code", url: "https://github.com/donaina/MeterFlow" },
+        { label: "Architecture Decisions (ADR)", url: "https://github.com/donaina/MeterFlow/blob/main/DECISIONS.md" },
+      ],
+    },
+  },
 ];
