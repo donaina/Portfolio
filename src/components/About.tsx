@@ -17,6 +17,10 @@ const FOCUS_AREAS = [
     description: '3-source drift detection with auto-heal that never zeroes a balance on outage.',
   },
   {
+    title: 'Contract drift',
+    description: 'Traffic-derived API schemas and structural diffs that catch silent field and type changes before clients break.',
+  },
+  {
     title: 'Reliability',
     description: 'Outbox patterns, retries, blue-green deploys, disaster recovery and audit readiness.',
   },

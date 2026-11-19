@@ -10,7 +10,7 @@ interface SEOProps {
 
 const SEO: React.FC<SEOProps> = ({
   title = 'Ayoola Aina — Payments & Core Banking Engineer',
-  description = 'Payments & core banking engineer building NIP middleware, Apache Fineract platforms, and the systems that keep money movement in balance.',
+  description = 'Payments & core banking engineer building NIP middleware, Apache Fineract platforms, and the systems that keep money movement in balance — in TypeScript and Go.',
   image = '/og-image.png',
   url = 'https://ayoolaaina.com',
 }) => {
@@ -31,7 +31,7 @@ const SEO: React.FC<SEOProps> = ({
       <meta name="twitter:description" content={description} />
       <meta name="twitter:image" content={image} />
 
-      <meta name="keywords" content="NestJS, Apache Fineract, NIBSS, NIP, Core Banking, Payments, TypeScript, Reconciliation, Banking-as-a-Service" />
+      <meta name="keywords" content="NestJS, Go, Apache Fineract, NIBSS, NIP, Core Banking, Payments, TypeScript, PostgreSQL, Playwright, Contract Testing, Reconciliation, Banking-as-a-Service" />
       <meta name="author" content="Ayoola Aina" />
       <link rel="canonical" href={url} />
     </Helmet>

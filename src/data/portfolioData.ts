@@ -15,10 +15,12 @@ export const personalInfo: PersonalInfo = {
     'Building the rails money moves on — NIP middleware, core banking platforms, and the systems that keep them in balance.',
   email: 'ayoolaina@gmail.com',
   phone: '+2348054771205',
+  phoneDisplay: '+234 805 477 1205',
   location: 'Lagos, Nigeria',
   availability: 'Open to Senior Engineering / Payments roles',
   bio: [
-    'Payments and core-banking engineer with 9+ years across retail banking, microfinance and mortgage. I currently lead the engineering team building BellBank MFB’s payment infrastructure — a NestJS/TypeScript middleware layer over Apache Fineract, integrated with the NIBSS Instant Payment (NIP) rail and Banking-as-a-Service partners.',
+    'Payments and core-banking engineer with 9 years across retail banking, microfinance and mortgage. I currently lead the engineering team building BellBank MFB’s payment infrastructure — a NestJS/TypeScript middleware layer over Apache Fineract, integrated with the NIBSS Instant Payment (NIP) rail and Banking-as-a-Service partners.',
+    'I write production TypeScript and Go. Beyond the banking work, I built Driftwood — a 24k-line Go reverse proxy and contract-drift detector with 393 test functions — and I build with AI coding agents (Claude Code) driven by written specs and tests.',
     'I have run core banking platforms end-to-end: account structure, loan origination, disbursement, repayment and collections, reconciliation — for a 5,000+ account microfinance bank. And I design tools that make money movement safe to test, including a fault-injecting NIP simulator that reproduces timeouts, duplicates and declined funds on demand.',
     'The thread through all of it: money must be safe first and fast second. Idempotency, holds, double-entry ledgers, outbox patterns, and reconciliation that never auto-heals to zero.',
   ],
@@ -30,10 +32,10 @@ export const personalInfo: PersonalInfo = {
     github: 'https://github.com/donaina',
   },
   stats: [
-    { value: '9+', label: 'years in payments & banking' },
+    { value: '9', label: 'years in payments & banking' },
     { value: '68', label: 'automated tests on the NIP simulator' },
     { value: '5,000+', label: 'accounts on a Fineract core' },
-    { value: '3-source', label: 'drift reconciliation' },
+    { value: '393', label: 'test functions on a Go service' },
   ],
 };
 
@@ -56,64 +58,78 @@ export const experiences: Experience[] = [
     stack: ['NestJS', 'TypeScript', 'Redis', 'BullMQ', 'Apache Fineract', 'Docker', 'Traefik', 'GitHub Actions'],
   },
   {
+    id: 8,
+    role: 'Lead Backend Engineer',
+    company: 'Circuit (Contract)',
+    period: 'Sep 2026 – Oct 2026',
+    summary:
+      'Owned the API and payments layer of a tournament platform — paid entry, escrow holds, refunds, payouts and dispute resolution.',
+    highlights: [
+      'Built paid entry with escrow holds, plus refunds, payouts and dispute resolution flows.',
+      'Designed a payment-provider abstraction across Bachs, Paystack and Flutterwave with live health probing and automatic fallback below a 70% health threshold.',
+      'Added signature-verified webhooks, request timeouts and rate limiting across the payment boundary.',
+    ],
+    stack: ['NestJS', 'TypeScript', 'Paystack', 'Flutterwave', 'Webhooks'],
+  },
+  {
+    id: 9,
+    role: 'Full-Stack & Security Engineer',
+    company: 'RideOne (Contract)',
+    period: 'Sep 2026 – Oct 2026',
+    summary:
+      'Delivered booking, passenger verification, driver-portal and dispatch features on a TanStack Start + Supabase platform, and led security remediation.',
+    highlights: [
+      'Delivered 40 PRs across booking, passenger verification, the driver portal and admin dispatch.',
+      'Led remediation of a 44-finding security audit, fixing 40: bound payment confirmation to the charged amount, scoped RLS role checks to the caller, validated uploads server-side and made rate limiting durable.',
+    ],
+    stack: ['TanStack Start', 'Supabase', 'TypeScript', 'PostgreSQL', 'RLS'],
+  },
+  {
     id: 2,
-    role: 'Core Banking Platform & Operations Lead',
+    role: 'Engineering Lead, Core Banking & Operations Lead',
     company: 'KATSU MFB (SABI Africa)',
     period: 'Jun 2024 – Present',
     location: 'Lagos, Nigeria',
     current: true,
     summary:
-      'Set up and ran a microfinance bank’s core banking platform from inception — Apache Fineract, account structure, loan workflows, reconciliation and regulatory readiness.',
+      'Stood up and ran a microfinance bank’s core banking platform from inception — Apache Fineract, account structure, product and charge rules, loan workflows, reconciliation and CBN-aligned reporting.',
     highlights: [
-      'Delivered the full platform setup: account opening, account structure, charge rules, reconciliation models and reporting — with CBN regulatory readiness.',
+      'Delivered the full platform setup: account opening, account structure, charge rules, reconciliation models and CBN-aligned reporting.',
       'Administered the MIFOS/Apache Fineract core for 5,000+ customer accounts, optimizing performance across all banking functions.',
       'Designed loan origination, disbursement and journal-entry processes for retail and MSME lending.',
-      'Automated back-office operations, cutting manual workflows by 40%, and integrated third-party APIs (KYC, disbursement, SMS).',
+      'Integrated KYC, disbursement and SMS providers and automated back-office procedures, cutting manual processing by 40%.',
     ],
-    stack: ['Apache Fineract', 'MySQL', 'Loan Lifecycle', 'Reconciliation', 'API Integration'],
+    stack: ['Apache Fineract', 'MySQL', 'Loan Lifecycle', 'Reconciliation', 'KYC', 'API Integration'],
   },
   {
     id: 3,
-    role: 'Application Support Engineer (BaaS Operations)',
+    role: 'Application Support Lead, BaaS Operations',
     company: 'VFD Tech',
     period: 'Nov 2023 – Sep 2024',
     location: 'Lagos, Nigeria',
     summary:
-      'Front-line support for Banking-as-a-Service transaction processing across VFD Group entities.',
+      'Front-line engineering support for Banking-as-a-Service transaction processing across VFD Group entities and external clients.',
     highlights: [
-      'Monitored API and payment-gateway transactions for accuracy and availability across BaaS products.',
-      'Produced daily operational and transaction reports that drove decisions and resolved customer-impacting issues.',
+      'Monitored API and payment-gateway traffic and drove customer-impacting incidents to resolution with product and vendor teams.',
+      'Produced daily operational and transaction reports that surfaced customer-impacting issues and drove decisions.',
     ],
     stack: ['Banking-as-a-Service', 'SQL', 'Postman', 'JIRA'],
   },
   {
     id: 4,
-    role: 'Team Lead, CBA, Database & Digital Channels Support',
+    role: 'Engineering Manager, CBA, Database & Digital Channels',
     company: 'Abbey Mortgage Bank PLC',
     period: 'Feb 2022 – Oct 2023',
     location: 'Lagos, Nigeria',
     summary:
-      'Led the core banking support team and owned database performance, high availability and disaster recovery.',
+      'Led the core banking application support team and database operations across 8 branches, with ownership of digital channels and disaster recovery.',
     highlights: [
-      'Restructured escalation workflows between IT and operations, cutting unresolved tickets by 30%.',
-      'Ensured availability of digital channels (Mobile, Card, USSD, Internet Banking) and optimized MSSQL performance via query tuning.',
-      'Spearheaded disaster-recovery tests across critical infrastructure; improved bug-resolution cycles by 25% via structured JIRA/TestRail workflows.',
+      'Cut unresolved tickets by 30% by restructuring the IT–operations escalation path.',
+      'Improved bug-resolution cycles by 25% with test scripts and documentation in TestRail and JIRA; supported e-channels platforms (mobile banking, card processing, USSD, internet banking).',
+      'Tuned MSSQL performance through query optimization and proactive monitoring; planned and tested disaster recovery across critical infrastructure.',
+      'Key contributor to the bank-wide ISO 27001 implementation and the migration of core databases to hyper-converged infrastructure.',
     ],
-    stack: ['MSSQL', 'MySQL', 'Disaster Recovery', 'TestRail', 'JIRA'],
-  },
-  {
-    id: 5,
-    role: 'Lead Network Administrator, DBA & Infrastructure',
-    company: 'Abbey Mortgage Bank PLC',
-    period: 'Mar 2020 – Jan 2022',
-    location: 'Lagos, Nigeria',
-    summary:
-      'Managed critical banking infrastructure and database operations across multiple branches.',
-    highlights: [
-      'Implemented security and control measures for data integrity and regulatory compliance.',
-      'Managed database backup, replication and access control; supported business continuity and DR planning.',
-    ],
-    stack: ['MSSQL', 'Networking', 'Firewalls', 'Backup & DR'],
+    stack: ['MSSQL', 'MySQL', 'ISO 27001', 'Disaster Recovery', 'TestRail', 'JIRA'],
   },
   {
     id: 6,
@@ -122,11 +138,26 @@ export const experiences: Experience[] = [
     period: 'Sep 2021 – Sep 2022',
     location: 'Remote',
     summary:
-      'Functional and network testing across Xiaomi device software release stages.',
+      'Functional and regression testing across Xiaomi mobile device software releases.',
     highlights: [
-      'Designed test plans, scenarios and scripts; tracked defects via JIRA and TestRail across releases.',
+      'Wrote test plans, scenarios and scripts from system requirements to catch issues before implementation.',
+      'Logged and tracked defects in JIRA and TestRail and documented the software development life cycle.',
     ],
-    stack: ['TestRail', 'JIRA', 'QA', 'Network Testing'],
+    stack: ['TestRail', 'JIRA', 'QA', 'Regression Testing'],
+  },
+  {
+    id: 5,
+    role: 'Lead Network Administrator, DBA & Infrastructure Management',
+    company: 'Abbey Mortgage Bank PLC',
+    period: 'Mar 2020 – Jan 2022',
+    location: 'Lagos, Nigeria',
+    summary:
+      'Managed critical banking infrastructure and database operations across multiple branches.',
+    highlights: [
+      'Upgraded branch network infrastructure and managed firewalls across 8 locations; ran system audits and security hardening against unauthorized access.',
+      'Owned database backup, replication and access control; analyzed network traffic to find and fix performance bottlenecks.',
+    ],
+    stack: ['MSSQL', 'Networking', 'Firewalls', 'Backup & DR', 'Security Hardening'],
   },
   {
     id: 7,
@@ -137,7 +168,8 @@ export const experiences: Experience[] = [
     summary:
       'Enterprise-wide technical support and e-channels platform operations.',
     highlights: [
-      'Supported e-channels platforms (mobile, USSD, cards) ensuring optimal uptime across departments.',
+      'Provided bank-wide IT and e-channels support; provisioned systems, logged incidents and escalated recurring problems.',
+      'Automated periodic database archiving to control database growth.',
     ],
     stack: ['IT Support', 'E-Channels', 'Incident Management'],
   },
@@ -145,24 +177,34 @@ export const experiences: Experience[] = [
 
 export const skillCategories: SkillCategory[] = [
   {
+    id: 'languages',
+    label: 'Languages',
+    skills: ['TypeScript', 'JavaScript', 'Go', 'SQL'],
+  },
+  {
     id: 'backend',
     label: 'Backend & Services',
-    skills: ['NestJS', 'TypeScript', 'Node.js', 'Fastify', 'REST APIs', 'BullMQ', 'Redis'],
+    skills: ['NestJS', 'Next.js', 'Fastify', 'Node.js', 'Prisma', 'Drizzle', 'REST APIs', 'Outbox Pattern'],
   },
   {
     id: 'data',
-    label: 'Data & Storage',
-    skills: ['MySQL', 'Redis', 'PostgreSQL', 'Apache Fineract', 'SQL', 'Backup & DR'],
+    label: 'Data & Messaging',
+    skills: ['PostgreSQL', 'MySQL', 'MSSQL', 'Redis', 'RabbitMQ', 'BullMQ', 'Apache Fineract'],
   },
   {
-    id: 'banking',
-    label: 'Banking Domain',
-    skills: ['NIBSS NIP', 'ISO 8583', 'Banking-as-a-Service', 'Outbox Pattern', 'Reconciliation', 'Loan Lifecycle'],
+    id: 'payments',
+    label: 'Payments & Banking',
+    skills: ['NIP / NIBSS', 'Banking-as-a-Service', 'Paystack', 'Flutterwave', 'Escrow & Refunds', 'Reconciliation', 'Double-Entry Ledgers', 'Loan Lifecycle'],
   },
   {
-    id: 'infra',
-    label: 'Infrastructure & DevOps',
-    skills: ['Docker', 'Docker Compose', 'Traefik', 'GitHub Actions', 'VPS / k8s', 'PM2'],
+    id: 'testing',
+    label: 'Testing & DevOps',
+    skills: ['Jest', 'Vitest', 'Playwright', 'TDD', 'Fault Injection', 'Docker', 'Traefik', 'GitHub Actions', 'Linux'],
+  },
+  {
+    id: 'practices',
+    label: 'Practices',
+    skills: ['Gemini API', 'Debugging', 'Performance Optimization', 'Refactoring', 'Legacy Modernization', 'ISO 27001', 'ITIL v4'],
   },
 ];
 
@@ -177,7 +219,7 @@ export const education: EducationEntry[] = [
     id: 2,
     degree: 'Higher National Diploma — Computer Science',
     institution: 'Yaba College of Technology',
-    period: '2020 – 2025',
+    period: '2025',
   },
   {
     id: 3,
@@ -188,14 +230,77 @@ export const education: EducationEntry[] = [
 ];
 
 export const certifications: Certification[] = [
-  { id: 1, name: 'Database & Data Processing with AWS', issuer: 'Amazon Web Services', year: '2023' },
+  { id: 1, name: 'AWS Database & Data Processing', issuer: 'Amazon Web Services', year: '2021' },
   { id: 2, name: 'ITIL v4 Foundation', issuer: 'PeopleCert', year: '2021' },
   { id: 3, name: 'Sophos XG Firewall Administrator', issuer: 'Sophos', year: '2018' },
 ];
 
 export const projects: Project[] = [
   {
-    id: 4,
+    id: 5,
+    slug: 'driftwood',
+    title: 'Driftwood',
+    subtitle: 'Reverse proxy and API contract-drift detector in Go',
+    role: 'Backend & Systems Engineer',
+    year: '2026',
+    status: 'internal',
+    summary:
+      'A reverse proxy that observes live traffic, infers JSON schemas, locks a baseline and raises a structural diff when a backend silently changes a field or type — built as a single Go binary with zero external Go dependencies.',
+    highlights: [
+      'Observes live API traffic and infers JSON schemas without instrumentation or client SDKs',
+      'Locks a contract baseline and raises a structural diff when a field or type drifts',
+      '24k lines of Go with 393 test functions and zero external Go dependencies',
+      'Ships as a single binary with a local dashboard',
+    ],
+    metrics: [
+      { value: '24k', label: 'lines of Go' },
+      { value: '393', label: 'test functions' },
+      { value: '0', label: 'external Go dependencies' },
+      { value: '1', label: 'binary to deploy' },
+    ],
+    stack: [
+      { area: 'Language', items: ['Go'] },
+      { area: 'Core', items: ['Reverse Proxy', 'JSON Schema Inference', 'Contract Diffing'] },
+      { area: 'Interface', items: ['Local Dashboard'] },
+      { area: 'Delivery', items: ['Single Binary', 'Zero Dependencies'] },
+    ],
+    featured: true,
+    sourceUrl: 'https://github.com/donaina/Driftwood',
+  },
+  {
+    id: 6,
+    slug: 'job-pipeline',
+    title: 'Job Pipeline',
+    subtitle: 'Multi-tenant job discovery and ranking platform',
+    role: 'Full-Stack Engineer',
+    year: '2026',
+    status: 'internal',
+    summary:
+      'A multi-tenant job discovery platform that ingests roles from 10 job feeds, parses CVs with the Gemini API, generates embeddings and ranks roles with a weighted scoring engine.',
+    highlights: [
+      'Ingests roles from 10 job feeds, with 4,500+ active roles in the pipeline',
+      'Parses CVs with the Gemini API and generates embeddings for semantic matching',
+      'Ranks roles with a weighted scoring engine across title alignment, skill overlap, seniority and vector similarity',
+      'Admin console with role-based access control plus a background crawler with live progress',
+      'Deployed with Docker on an Oracle Cloud VPS behind Caddy',
+    ],
+    metrics: [
+      { value: '10', label: 'job feeds' },
+      { value: '4,500+', label: 'active roles' },
+      { value: '4', label: 'scoring signals' },
+      { value: 'RBAC', label: 'admin console' },
+    ],
+    stack: [
+      { area: 'Frontend', items: ['Next.js', 'TypeScript', 'React'] },
+      { area: 'Data', items: ['PostgreSQL', 'Drizzle ORM'] },
+      { area: 'AI', items: ['Gemini API', 'Embeddings'] },
+      { area: 'Delivery', items: ['Docker', 'Oracle Cloud VPS', 'Caddy'] },
+    ],
+    featured: true,
+    sourceUrl: 'https://github.com/donaina/Job-pipeline',
+  },
+  {
+    id: 8,
     slug: 'bellmonie-banking-platform',
     title: 'BellMonie Banking Platform',
     subtitle: 'A safer ledger and service architecture for digital banking',
@@ -472,7 +577,7 @@ export const projects: Project[] = [
       "35 unit & fast-check property tests over 4,000+ randomized invariant runs, 21 E2E tests, and live interactive React odometer UI with zero float drift",
     ],
     metrics: [
-      { value: "35+", label: "unit & property tests" },
+      { value: "56", label: "unit, property & E2E tests" },
       { value: "100%", label: "ledger balance parity" },
       { value: "4,000+", label: "property test runs" },
       { value: "0", label: "floating-point drift" },
@@ -526,5 +631,36 @@ export const projects: Project[] = [
         { label: "Architecture Decisions (ADR)", url: "https://github.com/donaina/MeterFlow/blob/main/DECISIONS.md" },
       ],
     },
+  },
+  {
+    id: 7,
+    slug: 'core-banking-application',
+    title: 'Core Banking Application',
+    subtitle: 'Multi-tenant core banking platform with an IFRS-aligned ledger',
+    role: 'Backend Engineer',
+    year: '2026',
+    status: 'internal',
+    summary:
+      'A multi-tenant core banking platform covering an IFRS-aligned general ledger, tiered KYC, savings and loan products, IFRS 9 provisioning, maker-checker approvals, NIP transfers, AML screening and signed webhooks.',
+    highlights: [
+      'IFRS-aligned general ledger with double-entry postings',
+      'Tiered KYC, savings and loan products, and IFRS 9 loan provisioning',
+      'Maker-checker approvals across sensitive operations',
+      'NIP transfers, AML screening and signed webhooks',
+    ],
+    metrics: [
+      { value: 'IFRS 9', label: 'loan provisioning' },
+      { value: 'Tiered', label: 'KYC model' },
+      { value: 'Maker–checker', label: 'approvals' },
+      { value: 'NIP', label: 'transfers + webhooks' },
+    ],
+    stack: [
+      { area: 'Backend', items: ['NestJS', 'TypeScript', 'RabbitMQ'] },
+      { area: 'Data', items: ['PostgreSQL', 'Prisma'] },
+      { area: 'Banking', items: ['IFRS Ledger', 'IFRS 9', 'Tiered KYC', 'NIP', 'AML'] },
+      { area: 'Security', items: ['Maker–Checker', 'Signed Webhooks'] },
+    ],
+    featured: true,
+    sourceUrl: 'https://github.com/donaina/cba',
   },
 ];
