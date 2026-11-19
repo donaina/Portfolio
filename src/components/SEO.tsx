@@ -11,8 +11,8 @@ interface SEOProps {
 const SEO: React.FC<SEOProps> = ({
   title = 'Ayoola Aina — Payments & Core Banking Engineer',
   description = 'Payments & core banking engineer building NIP middleware, Apache Fineract platforms, and the systems that keep money movement in balance — in TypeScript and Go.',
-  image = '/og-image.png',
-  url = 'https://ayoolaaina.com',
+  image = 'https://donaina.netlify.app/og-image.jpg',
+  url = 'https://donaina.netlify.app/',
 }) => {
   return (
     <Helmet>
@@ -23,8 +23,10 @@ const SEO: React.FC<SEOProps> = ({
       <meta property="og:title" content={title} />
       <meta property="og:description" content={description} />
       <meta property="og:image" content={image} />
+      <meta property="og:image:alt" content={title} />
       <meta property="og:url" content={url} />
       <meta property="og:type" content="website" />
+      <meta property="og:site_name" content="Ayoola Aina" />
 
       <meta name="twitter:card" content="summary_large_image" />
       <meta name="twitter:title" content={title} />

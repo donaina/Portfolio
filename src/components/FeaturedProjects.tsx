@@ -49,7 +49,7 @@ const FeaturedProjects: React.FC = () => {
                       {project.status === 'live' && (
                         <span className="flex items-center gap-1.5 font-mono text-xs text-success-500">
                           <span className="w-1.5 h-1.5 rounded-full bg-success-500" />
-                          live demo
+                          live
                         </span>
                       )}
                       {project.status === 'production' && (
