@@ -1,5 +1,5 @@
 import React from 'react';
-import { motion } from 'framer-motion';
+import { motion, useReducedMotion } from 'framer-motion';
 
 const NODES = [
   { x: 20, label: 'CLIENT' },
@@ -9,6 +9,8 @@ const NODES = [
 ];
 
 const FlowLine: React.FC = () => {
+  const prefersReducedMotion = useReducedMotion();
+
   return (
     <svg
       viewBox="0 0 430 78"
@@ -36,7 +38,7 @@ const FlowLine: React.FC = () => {
             x={n.x}
             y="60"
             textAnchor="middle"
-            fill="#6B7A93"
+            fill="#75849D"
             fontSize="8.5"
             fontFamily="'JetBrains Mono', monospace"
             letterSpacing="1"
@@ -45,15 +47,19 @@ const FlowLine: React.FC = () => {
           </text>
         </g>
       ))}
-      {/* animated packet */}
-      <motion.circle
-        cx="20"
-        cy="28"
-        r="3"
-        fill="#E4C580"
-        animate={{ cx: [20, 410] }}
-        transition={{ repeat: Infinity, duration: 4, ease: 'easeInOut', repeatDelay: 1.4 }}
-      />
+      {/* moving packet — parked mid-rail when motion is reduced */}
+      {prefersReducedMotion ? (
+        <circle cx="215" cy="28" r="3" fill="#E4C580" />
+      ) : (
+        <motion.circle
+          cx="20"
+          cy="28"
+          r="3"
+          fill="#E4C580"
+          animate={{ cx: [20, 410] }}
+          transition={{ repeat: Infinity, duration: 4, ease: 'easeInOut', repeatDelay: 1.4 }}
+        />
+      )}
     </svg>
   );
 };

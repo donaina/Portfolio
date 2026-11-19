@@ -24,7 +24,7 @@ export default {
         ink: {
           DEFAULT: '#EAF0FA', // Primary text
           2: '#A6B2C8', // Secondary text
-          3: '#6B7A93', // Muted / labels
+          3: '#75849D', // Muted / labels (AA on night-900/800)
         },
         line: {
           DEFAULT: 'rgba(148, 163, 184, 0.10)', // Hairlines, grid

@@ -5,8 +5,11 @@ import { personalInfo } from '../data/portfolioData';
 import GridBackdrop from './ui/GridBackdrop';
 import FlowLine from './ui/FlowLine';
 import Stat from './ui/Stat';
+import { usePrefersReducedMotion } from '../hooks/usePrefersReducedMotion';
 
 const Hero: React.FC = () => {
+  const prefersReducedMotion = usePrefersReducedMotion();
+
   return (
     <section id="home" className="relative min-h-screen flex items-center pt-28 pb-16 overflow-hidden">
       <GridBackdrop />
@@ -29,7 +32,7 @@ const Hero: React.FC = () => {
           <Link
             to="projects"
             spy={true}
-            smooth={true}
+            smooth={!prefersReducedMotion}
             offset={-72}
             duration={500}
             className="inline-flex items-center gap-2 px-6 py-3 bg-champagne-400 text-night-950 font-medium text-sm hover:bg-champagne-300 transition-colors cursor-pointer"
@@ -110,13 +113,13 @@ const Hero: React.FC = () => {
       <Link
         to="about"
         spy={true}
-        smooth={true}
+        smooth={!prefersReducedMotion}
         offset={-72}
         duration={500}
         className="absolute bottom-6 left-1/2 transform -translate-x-1/2 flex items-center justify-center w-11 h-11 border border-night-500 rounded-full text-ink-3 hover:text-champagne-400 hover:border-champagne-500/50 transition-colors cursor-pointer"
         aria-label="Scroll to About section"
       >
-        <ArrowDown size={20} className="animate-bounce" />
+        <ArrowDown size={20} className="animate-bounce" aria-hidden />
       </Link>
     </section>
   );

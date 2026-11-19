@@ -10,7 +10,7 @@ const Experience: React.FC = () => {
       id="experience"
       eyebrow="// 03 — EXPERIENCE"
       title="Experience"
-      description="Nine years across core banking, payments and financial infrastructure."
+      description="9 years across core banking, payments and financial infrastructure."
     >
       <div className="relative">
         <div className="absolute left-[7px] top-2 bottom-2 w-px bg-night-500" aria-hidden />

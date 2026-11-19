@@ -1,5 +1,5 @@
 import React from 'react';
-import { motion } from 'framer-motion';
+import { motion, useReducedMotion } from 'framer-motion';
 
 interface RevealProps {
   children: React.ReactNode;
@@ -8,6 +8,12 @@ interface RevealProps {
 }
 
 const Reveal: React.FC<RevealProps> = ({ children, delay = 0, className }) => {
+  const prefersReducedMotion = useReducedMotion();
+
+  if (prefersReducedMotion) {
+    return <div className={className}>{children}</div>;
+  }
+
   return (
     <motion.div
       className={className}
