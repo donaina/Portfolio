@@ -12,7 +12,7 @@ const Hero: React.FC = () => {
       <GridBackdrop />
       <div className="container mx-auto px-4 relative">
         <p className="font-mono text-sm text-champagne-400 tracking-wider mb-5">
-          {personalInfo.location} — {personalInfo.availability}
+          {personalInfo.location} · {personalInfo.workMode}
         </p>
 
         <h1 className="font-heading text-5xl md:text-7xl font-semibold text-ink tracking-tight">
@@ -79,8 +79,20 @@ const Hero: React.FC = () => {
           )}
         </div>
 
+        {/* quick facts */}
+        <dl className="mt-10 max-w-2xl grid gap-px bg-night-500 border border-night-500 rounded-sm sm:grid-cols-3">
+          {personalInfo.quickFacts.map((fact) => (
+            <div key={fact.label} className="bg-night-900/80 px-4 py-4">
+              <dt className="font-mono text-[10px] tracking-[0.2em] text-ink-3 uppercase">
+                {fact.label}
+              </dt>
+              <dd className="mt-1.5 text-sm text-ink-2 leading-snug">{fact.value}</dd>
+            </div>
+          ))}
+        </dl>
+
         {/* stat tiles */}
-        <div className="mt-16 grid grid-cols-2 md:grid-cols-4 gap-x-8 gap-y-10">
+        <div className="mt-14 grid grid-cols-2 md:grid-cols-4 gap-x-8 gap-y-10">
           {personalInfo.stats.map((stat) => (
             <Stat key={stat.label} stat={stat} />
           ))}

@@ -9,8 +9,8 @@ interface SEOProps {
 }
 
 const SEO: React.FC<SEOProps> = ({
-  title = 'Ayoola Aina — Payments & Core Banking Engineer',
-  description = 'Payments & core banking engineer building NIP middleware, Apache Fineract platforms, and the systems that keep money movement in balance — in TypeScript and Go.',
+  title = 'Ayoola Aina — Software Engineer, Backend & Payments Systems',
+  description = 'Software engineer building backend and payments systems: NIP middleware, Apache Fineract core banking platforms, and the reconciliation that keeps money movement in balance — in TypeScript and Go.',
   image = 'https://donaina.netlify.app/og-image.jpg',
   url = 'https://donaina.netlify.app/',
 }) => {
