@@ -7,6 +7,7 @@ import Reveal from './ui/Reveal';
 import Tag from './ui/Tag';
 import CaseStudy from './CaseStudy';
 import ProjectDiagram from './ProjectDiagram';
+import { usePrefersReducedMotion } from '../hooks/usePrefersReducedMotion';
 import { ArrowUpRight, BookOpen, FileCode2 } from 'lucide-react';
 
 const STATUS_META: Record<ProjectStatus, { label: string; className: string; dot: string }> = {
@@ -28,6 +29,7 @@ const StatusBadge: React.FC<{ status: ProjectStatus }> = ({ status }) => {
 };
 
 const FeaturedProjects: React.FC = () => {
+  const prefersReducedMotion = usePrefersReducedMotion();
   const featured = projects.filter((p) => p.featured);
   const flagships = featured.filter((p) => p.flagship);
   const more = featured.filter((p) => !p.flagship);
@@ -48,7 +50,9 @@ const FeaturedProjects: React.FC = () => {
       // Compact stories render below the grid, so bring the panel into view once mounted.
       if (more.some((p) => p.slug === slug)) {
         window.setTimeout(() => {
-          document.getElementById(`build-${slug}`)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          document
+            .getElementById(`build-${slug}`)
+            ?.scrollIntoView({ behavior: prefersReducedMotion ? 'auto' : 'smooth', block: 'start' });
         }, 100);
       }
     } else {

@@ -1,5 +1,5 @@
 import React from 'react';
-import { motion } from 'framer-motion';
+import { motion, useReducedMotion } from 'framer-motion';
 import { Project } from '../types';
 import { ArrowUpRight, X } from 'lucide-react';
 
@@ -23,6 +23,7 @@ interface CaseStudyProps {
 }
 
 const CaseStudy: React.FC<CaseStudyProps> = ({ project, flush, onClose }) => {
+  const prefersReducedMotion = useReducedMotion();
   const story = project.buildStory;
   if (!story) return null;
 
@@ -32,7 +33,7 @@ const CaseStudy: React.FC<CaseStudyProps> = ({ project, flush, onClose }) => {
       initial={{ height: 0, opacity: 0 }}
       animate={{ height: 'auto', opacity: 1 }}
       exit={{ height: 0, opacity: 0 }}
-      transition={{ duration: 0.35, ease: 'easeInOut' }}
+      transition={{ duration: prefersReducedMotion ? 0 : 0.35, ease: 'easeInOut' }}
       className={`overflow-hidden scroll-mt-24 ${flush ? 'mt-4 border border-night-500 bg-night-800 rounded-sm' : ''}`}
     >
       <div
@@ -62,6 +63,7 @@ const CaseStudy: React.FC<CaseStudyProps> = ({ project, flush, onClose }) => {
               <button
                 type="button"
                 onClick={onClose}
+                aria-label={`Close build story — ${project.title}`}
                 className="inline-flex items-center gap-1.5 px-3 py-1.5 font-mono text-xs text-ink-3 hover:text-ink border border-night-500 transition-colors"
               >
                 Close <X size={14} />

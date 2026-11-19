@@ -19,8 +19,12 @@ const Contact: React.FC = () => {
     message: ''
   });
 
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (isSubmitting) return;
+    setIsSubmitting(true);
 
     try {
       const response = await fetch("/", {
@@ -53,13 +57,17 @@ const Contact: React.FC = () => {
       console.error('Error submitting form:', error);
       setNotification({
         type: 'error',
-        message: 'Failed to send message. Please try again.'
+        message: 'Failed to send message.'
       });
       setTimeout(() => {
         setNotification({ type: null, message: '' });
-      }, 5000);
+      }, 8000);
+    } finally {
+      setIsSubmitting(false);
     }
   };
+
+  const mailtoHref = `mailto:${personalInfo.email}?subject=${encodeURIComponent('Portfolio enquiry')}`;
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
@@ -78,15 +86,30 @@ const Contact: React.FC = () => {
     >
       {/* Notification Toast */}
       {notification.type && (
-        <div className={`fixed top-4 right-4 z-50 flex items-center gap-2 p-4 rounded-sm shadow-lg transition-all duration-500 ${
-          notification.type === 'success' ? 'bg-success-500' : 'bg-error-500'
-        } text-white`}>
+        <div
+          role={notification.type === 'error' ? 'alert' : 'status'}
+          aria-live={notification.type === 'error' ? 'assertive' : 'polite'}
+          aria-atomic="true"
+          className={`fixed top-4 right-4 z-50 flex items-center gap-2 p-4 rounded-sm shadow-lg transition-all duration-500 ${
+            notification.type === 'success' ? 'bg-success-500' : 'bg-error-500'
+          } text-white`}
+        >
           {notification.type === 'success' ? (
-            <CheckCircle2 className="w-6 h-6" />
+            <CheckCircle2 className="w-6 h-6" aria-hidden />
           ) : (
-            <XCircle className="w-6 h-6" />
+            <XCircle className="w-6 h-6" aria-hidden />
           )}
-          <p className="text-sm">{notification.message}</p>
+          {notification.type === 'error' ? (
+            <p className="text-sm">
+              {notification.message} Please try again, or{' '}
+              <a href={mailtoHref} className="font-medium underline underline-offset-2 hover:text-white/80">
+                email me directly
+              </a>
+              .
+            </p>
+          ) : (
+            <p className="text-sm">{notification.message}</p>
+          )}
         </div>
       )}
 
@@ -174,7 +197,12 @@ const Contact: React.FC = () => {
             className="space-y-6"
           >
             <input type="hidden" name="form-name" value="contact" />
-            <input type="hidden" name="bot-field" />
+            {/* Honeypot must stay in the DOM for Netlify but be invisible to real users. */}
+            <p className="hidden" aria-hidden="true">
+              <label>
+                Don’t fill this out if you’re human: <input name="bot-field" tabIndex={-1} autoComplete="off" />
+              </label>
+            </p>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
               <div>
@@ -239,10 +267,12 @@ const Contact: React.FC = () => {
 
             <button
               type="submit"
-              className="w-full flex items-center justify-center px-6 py-3 bg-champagne-400 text-night-950 font-medium text-sm hover:bg-champagne-300 transition-colors"
+              disabled={isSubmitting}
+              aria-busy={isSubmitting}
+              className="w-full flex items-center justify-center px-6 py-3 bg-champagne-400 text-night-950 font-medium text-sm hover:bg-champagne-300 transition-colors disabled:opacity-60 disabled:cursor-not-allowed"
             >
-              <Send size={18} className="mr-2" />
-              Send Message
+              <Send size={18} className="mr-2" aria-hidden />
+              {isSubmitting ? 'Sending…' : 'Send Message'}
             </button>
           </form>
         </div>

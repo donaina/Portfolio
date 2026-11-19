@@ -1,9 +1,11 @@
 import React from 'react';
 import { personalInfo } from '../data/portfolioData';
 import { Link } from 'react-scroll';
+import { usePrefersReducedMotion } from '../hooks/usePrefersReducedMotion';
 
 const Footer: React.FC = () => {
   const currentYear = new Date().getFullYear();
+  const prefersReducedMotion = usePrefersReducedMotion();
 
   const navItems = [
     { id: 'home', label: 'Home' },
@@ -32,7 +34,7 @@ const Footer: React.FC = () => {
                   <Link
                     to={item.id}
                     spy={true}
-                    smooth={true}
+                    smooth={!prefersReducedMotion}
                     offset={-72}
                     duration={500}
                     className="text-sm text-ink-2 hover:text-champagne-400 transition-colors cursor-pointer"
