@@ -11,7 +11,8 @@ export interface PersonalInfo {
   phone: string;
   phoneDisplay: string;
   location: string;
-  availability: string;
+  workMode: string;
+  quickFacts: { label: string; value: string }[];
   bio: string[];
   profileImage: string;
   resumeUrl: string;
@@ -48,6 +49,10 @@ export interface BuildStory {
   links: ProjectLink[];
 }
 
+export type ProjectStatus = 'live' | 'production' | 'staging' | 'internal' | 'public';
+
+export type ProjectDiagramKey = 'driftwood' | 'nip-simulator' | 'fineract' | 'bellmonie';
+
 export interface Project {
   id: number;
   slug: string;
@@ -55,7 +60,7 @@ export interface Project {
   subtitle: string;
   role: string;
   year: string;
-  status: 'live' | 'production' | 'staging' | 'internal';
+  status: ProjectStatus;
   summary: string;
   highlights: string[];
   metrics: ProjectMetric[];
@@ -63,6 +68,9 @@ export interface Project {
   demoUrl?: string;
   sourceUrl?: string;
   featured: boolean;
+  /** Expanded, full-width card on the site. Non-flagship featured projects render in the compact grid. */
+  flagship?: boolean;
+  diagram?: ProjectDiagramKey;
   buildStory?: BuildStory;
 }
 

@@ -1,7 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { Project } from '../types';
-import { ArrowUpRight } from 'lucide-react';
+import { ArrowUpRight, X } from 'lucide-react';
 
 const SECTIONS: {
   key: 'overview' | 'challenge' | 'architecture' | 'implementation' | 'testing' | 'outcomes';
@@ -15,7 +15,14 @@ const SECTIONS: {
   { key: 'outcomes', label: 'Outcomes' },
 ];
 
-const CaseStudy: React.FC<{ project: Project }> = ({ project }) => {
+interface CaseStudyProps {
+  project: Project;
+  /** Standalone panel under a compact card instead of a section inside an expanded card. */
+  flush?: boolean;
+  onClose?: () => void;
+}
+
+const CaseStudy: React.FC<CaseStudyProps> = ({ project, flush, onClose }) => {
   const story = project.buildStory;
   if (!story) return null;
 
@@ -26,26 +33,41 @@ const CaseStudy: React.FC<{ project: Project }> = ({ project }) => {
       animate={{ height: 'auto', opacity: 1 }}
       exit={{ height: 0, opacity: 0 }}
       transition={{ duration: 0.35, ease: 'easeInOut' }}
-      className="overflow-hidden"
+      className={`overflow-hidden scroll-mt-24 ${flush ? 'mt-4 border border-night-500 bg-night-800 rounded-sm' : ''}`}
     >
-      <div className="mt-6 border-t border-night-500 bg-night-900/60 p-6 md:p-10">
+      <div
+        className={
+          flush
+            ? 'bg-night-900/60 p-6 md:p-8'
+            : 'mt-6 border-t border-night-500 bg-night-900/60 p-6 md:p-10'
+        }
+      >
         <div className="flex flex-wrap items-center justify-between gap-4 mb-8 pb-6 border-b border-line">
-          <p className="font-mono text-xs tracking-[0.2em] text-ink-3">BUILD STORY</p>
-          {story.links.length > 0 && (
-            <div className="flex flex-wrap gap-3">
-              {story.links.map((link) => (
-                <a
-                  key={link.url}
-                  href={link.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-1.5 px-3 py-1.5 font-mono text-xs text-champagne-400 border border-champagne-500/40 hover:bg-champagne-500/10 transition-colors"
-                >
-                  {link.label} <ArrowUpRight size={14} />
-                </a>
-              ))}
-            </div>
-          )}
+          <p className="font-mono text-xs tracking-[0.2em] text-ink-3">
+            BUILD STORY<span className="sr-only"> — {project.title}</span>
+          </p>
+          <div className="flex flex-wrap items-center gap-3">
+            {story.links.map((link) => (
+              <a
+                key={link.url}
+                href={link.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-1.5 px-3 py-1.5 font-mono text-xs text-champagne-400 border border-champagne-500/40 hover:bg-champagne-500/10 transition-colors"
+              >
+                {link.label} <ArrowUpRight size={14} />
+              </a>
+            ))}
+            {onClose && (
+              <button
+                type="button"
+                onClick={onClose}
+                className="inline-flex items-center gap-1.5 px-3 py-1.5 font-mono text-xs text-ink-3 hover:text-ink border border-night-500 transition-colors"
+              >
+                Close <X size={14} />
+              </button>
+            )}
+          </div>
         </div>
 
         <div className="space-y-8">

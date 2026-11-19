@@ -10,14 +10,28 @@ import {
 
 export const personalInfo: PersonalInfo = {
   name: 'Ayoola Aina',
-  title: 'Payments & Core Banking Engineer',
+  title: 'Software Engineer — Backend & Payments Systems',
   tagline:
     'Building the rails money moves on — NIP middleware, core banking platforms, and the systems that keep them in balance.',
   email: 'ayoolaina@gmail.com',
   phone: '+2348054771205',
   phoneDisplay: '+234 805 477 1205',
   location: 'Lagos, Nigeria',
-  availability: 'Open to Senior Engineering / Payments roles',
+  workMode: 'Remote-friendly · WAT',
+  quickFacts: [
+    {
+      label: 'Currently',
+      value: 'Leading payment infrastructure at BellBank MFB (consulting)',
+    },
+    {
+      label: 'Building',
+      value: 'Driftwood — a Go contract-drift detector',
+    },
+    {
+      label: 'Open to',
+      value: 'Senior engineering / payments roles',
+    },
+  ],
   bio: [
     'Payments and core-banking engineer with 9 years across retail banking, microfinance and mortgage. I currently lead the engineering team building BellBank MFB’s payment infrastructure — a NestJS/TypeScript middleware layer over Apache Fineract, integrated with the NIBSS Instant Payment (NIP) rail and Banking-as-a-Service partners.',
     'I write production TypeScript and Go. Beyond the banking work, I built Driftwood — a 24k-line Go reverse proxy and contract-drift detector with 393 test functions — and I build with AI coding agents (Claude Code) driven by written specs and tests.',
@@ -243,7 +257,7 @@ export const projects: Project[] = [
     subtitle: 'Reverse proxy and API contract-drift detector in Go',
     role: 'Backend & Systems Engineer',
     year: '2026',
-    status: 'internal',
+    status: 'public',
     summary:
       'A reverse proxy that observes live traffic, infers JSON schemas, locks a baseline and raises a structural diff when a backend silently changes a field or type — built as a single Go binary with zero external Go dependencies.',
     highlights: [
@@ -265,7 +279,40 @@ export const projects: Project[] = [
       { area: 'Delivery', items: ['Single Binary', 'Zero Dependencies'] },
     ],
     featured: true,
+    flagship: true,
+    diagram: 'driftwood',
     sourceUrl: 'https://github.com/donaina/Driftwood',
+    buildStory: {
+      overview: [
+        'Driftwood is a reverse proxy that watches the traffic already flowing between clients and a backend, learns the JSON shape of every response, and turns that into a contract you can check.',
+        'It exists because API documents drift. A backend ships a field rename, a nullable type change or a silently removed key, and the first client to break is in production. Driftwood measures the contract from real traffic instead of trusting a hand-maintained spec.',
+        'It is a single Go binary with no external Go dependencies: start it in front of a service, exercise the endpoints, lock a baseline, and every later response is compared structurally against it.',
+      ],
+      challenge: [
+        'Inferring a stable schema from a sample is the hard part. One response cannot distinguish a field that is always present from one that appears occasionally; nullable fields, arrays of mixed objects and nested objects all need observation across many requests.',
+        'The diff also has to be useful, not noisy. Comparing raw JSON produces churn from values; the diff must compare structure — field presence, type, nullability, array element shape — and report only changes a client could actually notice.',
+        'And it has to stay out of the way: a proxy in the request path cannot add meaningful latency or become a new failure domain.',
+      ],
+      architecture: [
+        'Client → Driftwood reverse proxy → upstream API. The proxy forwards each request, observes the response body, and returns it unchanged.',
+        'Observed responses feed a schema-inference layer that merges each sample into a running structural model. Once a baseline is locked, the same inference runs against new traffic and a structural diff engine compares the two.',
+        'A local dashboard reads the baseline and diff history. Everything runs in-process in one binary — there is no database or sidecar to operate.',
+      ],
+      implementation: [
+        'Built on Go’s standard library: an HTTP reverse proxy for forwarding, a schema model that records object fields, types, nullability and array element shapes, and a diff algorithm that walks both trees and classifies each change — added, removed, type changed, nullability changed.',
+        'Baselines are persisted per route and method, so different endpoints can evolve independently and a baseline can be reviewed before it is adopted.',
+        'Zero external Go dependencies keeps the build reproducible and the binary trivial to deploy. The codebase is 24k lines of Go with 393 test functions.',
+      ],
+      testing: [
+        '393 test functions exercise schema inference, merge behaviour across inconsistent samples, every diff classification, and proxy pass-through.',
+        'The suite includes malformed JSON, non-JSON responses and upstream failures, so the proxy is checked on the paths that would otherwise take a service down.',
+      ],
+      outcomes: [
+        'A contract check that reflects what the backend actually sends, with no OpenAPI document to maintain.',
+        'A single binary an engineer can put in front of a service, observe for a while, lock a baseline, and leave running in staging or ahead of a client release.',
+      ],
+      links: [{ label: 'Source', url: 'https://github.com/donaina/Driftwood' }],
+    },
   },
   {
     id: 6,
@@ -274,7 +321,7 @@ export const projects: Project[] = [
     subtitle: 'Multi-tenant job discovery and ranking platform',
     role: 'Full-Stack Engineer',
     year: '2026',
-    status: 'internal',
+    status: 'public',
     summary:
       'A multi-tenant job discovery platform that ingests roles from 10 job feeds, parses CVs with the Gemini API, generates embeddings and ranks roles with a weighted scoring engine.',
     highlights: [
@@ -298,6 +345,33 @@ export const projects: Project[] = [
     ],
     featured: true,
     sourceUrl: 'https://github.com/donaina/Job-pipeline',
+    buildStory: {
+      overview: [
+        'Job Pipeline is a multi-tenant job discovery and ranking platform. It ingests roles from ten job feeds, parses uploaded CVs with the Gemini API, generates embeddings, and ranks each role against the candidate.',
+        'The goal was to replace keyword matching with a ranked shortlist that reflects title alignment, skill overlap, seniority and semantic similarity — while keeping the ingestion and admin side observable.',
+      ],
+      challenge: [
+        'Job feeds are inconsistent: different schemas, duplicate listings across sources, stale roles and inconsistent seniority language. Ingestion has to normalize and deduplicate rather than append everything.',
+        'CVs are unstructured. Extracting skills and experience reliably needs an LLM, and the ranking has to combine that signal with structured signals without letting any one dominate.',
+        'The crawler is long-running, so progress and failures need to be visible in the admin console instead of hidden in logs.',
+      ],
+      architecture: [
+        'A background crawler pulls from ten feed adapters, normalizes each role into a shared model, deduplicates, and writes to PostgreSQL through Drizzle.',
+        'CV upload → Gemini parsing → embeddings → candidate profile. Ranking combines four weighted signals: title alignment, skill overlap, seniority match and vector similarity.',
+        'Next.js and TypeScript frontend with an admin console behind role-based access control; deployed with Docker on an Oracle Cloud VPS behind Caddy.',
+      ],
+      implementation: [
+        'Feed adapters isolate each source, so one broken feed does not stall a crawl; the crawler reports live progress to the admin console.',
+        'The scoring engine is a weighted combination of the four signals, so ranking can be tuned without rewriting ingestion.',
+        'Admin access is role-based, and crawled roles are inspectable so bad feed data can be identified and corrected.',
+      ],
+      testing: [],
+      outcomes: [
+        '4,500+ active roles in the pipeline from ten job feeds.',
+        'A ranked shortlist built from four scoring signals, with an admin console that makes ingestion observable.',
+      ],
+      links: [{ label: 'Source', url: 'https://github.com/donaina/Job-pipeline' }],
+    },
   },
   {
     id: 8,
@@ -329,6 +403,8 @@ export const projects: Project[] = [
       { area: 'Delivery', items: ['Docker', 'Jenkins', 'GitHub', 'Netlify-safe staging workflow'] },
     ],
     featured: true,
+    flagship: true,
+    diagram: 'bellmonie',
     buildStory: {
       overview: [
         'BellMonie is a digital-banking platform with separate services for identity and onboarding, financial-account orchestration, notifications and utility payments. The platform connects those services to Apache Fineract for core banking, a payment-rail partner for transfers and collections, and providers for email, SMS and value-added services.',
@@ -394,6 +470,8 @@ export const projects: Project[] = [
     ],
     sourceUrl: 'https://github.com/donaina/Fineract-NIP-Simulator',
     featured: true,
+    flagship: true,
+    diagram: 'nip-simulator',
     buildStory: {
       overview: [
         'The NIP Simulator reproduces the Nigerian Instant Payment rail in miniature: a NestJS/Fastify middleware acting as a bank’s payment engine, a mock NIBSS switch, a mock beneficiary bank, and an Apache Fineract shadow ledger.',
@@ -457,6 +535,8 @@ export const projects: Project[] = [
       { area: 'Infra', items: ['Docker Compose', 'Traefik', 'VPS / k8s'] },
     ],
     featured: true,
+    flagship: true,
+    diagram: 'fineract',
     buildStory: {
       overview: [
         'Apache Fineract is the open-source core banking platform that runs microfinance banks and smaller lenders across the developing world. This project took a vanilla Fineract release, made it production-ready for a microfinance bank, and operated it in production.',
@@ -639,7 +719,7 @@ export const projects: Project[] = [
     subtitle: 'Multi-tenant core banking platform with an IFRS-aligned ledger',
     role: 'Backend Engineer',
     year: '2026',
-    status: 'internal',
+    status: 'public',
     summary:
       'A multi-tenant core banking platform covering an IFRS-aligned general ledger, tiered KYC, savings and loan products, IFRS 9 provisioning, maker-checker approvals, NIP transfers, AML screening and signed webhooks.',
     highlights: [
@@ -662,5 +742,32 @@ export const projects: Project[] = [
     ],
     featured: true,
     sourceUrl: 'https://github.com/donaina/cba',
+    buildStory: {
+      overview: [
+        'A multi-tenant core banking platform built around an IFRS-aligned general ledger: double-entry postings, tiered KYC, savings and loan products, IFRS 9 provisioning, maker-checker approvals, NIP transfers, AML screening and signed webhooks.',
+        'It is an attempt to model the controls a real bank needs — not just accounts and balances, but the approval, accounting and compliance paths around them.',
+      ],
+      challenge: [
+        'A ledger is only useful if it is balanced. Every operation has to produce double-entry postings that reconcile, including loan provisioning and fee handling.',
+        'Multi-tenancy adds isolation requirements: one institution’s products, accounts and approvals must not leak into another’s.',
+        'Sensitive operations need maker-checker control, and external events such as NIP callbacks need signature verification and idempotent handling.',
+      ],
+      architecture: [
+        'NestJS/TypeScript services over PostgreSQL with Prisma, with RabbitMQ for asynchronous work.',
+        'The ledger module owns the chart of accounts and posts balanced journal entries. Product modules for savings, loans and KYC tiers post through it rather than writing balances directly.',
+        'Maker-checker wraps sensitive operations; NIP and webhook handlers verify signatures before posting.',
+      ],
+      implementation: [
+        'Double-entry postings are generated per operation, with debits and credits written in the same transaction as the business record.',
+        'IFRS 9 provisioning is modelled on the loan book; tiered KYC gates product limits.',
+        'AML screening and signed webhooks sit at the integration boundary, while maker-checker approvals prevent a single operator from completing a sensitive action.',
+      ],
+      testing: [],
+      outcomes: [
+        'A working core banking model spanning ledger, KYC, lending and payment controls.',
+        'An IFRS-aligned accounting base that can be extended with new products.',
+      ],
+      links: [{ label: 'Source', url: 'https://github.com/donaina/cba' }],
+    },
   },
 ];
