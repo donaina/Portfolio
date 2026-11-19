@@ -9,6 +9,7 @@ export interface PersonalInfo {
   tagline: string;
   email: string;
   phone: string;
+  phoneDisplay: string;
   location: string;
   availability: string;
   bio: string[];
